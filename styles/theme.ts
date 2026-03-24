@@ -18,6 +18,7 @@ export const theme = createTheme({
       subtle: "#f2f0ec",
       section: "#ece9e4",
       elevated: "#ffffff",
+      navbar: "#ffffffe5",
     },
     primary: {
       main: "#000000",

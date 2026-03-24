@@ -8,7 +8,7 @@ import { Typography } from "@mui/material";
 import Link from "next/link";
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.navbar,
   color: theme.palette.text.primary,
   boxShadow: "none",
   borderBottom: `1px solid ${theme.palette.divider}`,
@@ -21,13 +21,13 @@ export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "1fr auto 1fr",
   alignItems: "center",
-  padding: theme.spacing(2, 4),
+  padding: theme.spacing(1, 2),
 }));
 
 export const LeftSection = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
-  gap: theme.spacing(4),
+  gap: theme.spacing(2),
 }));
 
 export const CenterSection = styled(Box)({
@@ -44,6 +44,7 @@ export const RightSection = styled(Box)({
 export const NavLinks = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: theme.spacing(3),
+  paddingRight: theme.spacing(3),
 }));
 
 export const StyledLink = styled(Link)({
@@ -57,7 +58,7 @@ export const NavLinkTypography = styled(Typography)({
   cursor: "pointer",
   "&:hover": {
     opacity: 0.7,
-    textDecoration: "underline",
+    textDecoration: "none",
   },
 });
 

@@ -9,10 +9,11 @@ export async function GET(req: Request) {
   }
 
   try {
-    // 🔍 produkter
+    // 🔍 products
     const products = await getProducts(undefined, query);
+    products: products.slice(0, 5);
 
-    // 🏷️ kategorier
+    // 🏷️ categories
     const categories = await getCategories();
 
     const filteredCategories = categories.filter((cat: any) =>

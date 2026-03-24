@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Logo from "../../public/assets/images/juliemeta-round-logo.png";
+import Logo from "../../public/assets/images/eudaimeta-logo.png";
 import {
   StyledAppBar,
   StyledToolbar,
@@ -26,10 +26,11 @@ export default function Navbar({ categories }: any) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [openResults, setOpenResults] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   const router = useRouter();
 
-  // AJAX search
+  // 🔥 AJAX search
   useEffect(() => {
     const timeout = setTimeout(async () => {
       if (!search.trim()) {
@@ -41,8 +42,6 @@ export default function Navbar({ categories }: any) {
       try {
         const res = await fetch(`/api/search?q=${search}`);
         const data = await res.json();
-
-        console.log("DATA:", data);
 
         const combined = [
           ...(data.products || []).map((p: any) => ({
@@ -56,6 +55,7 @@ export default function Navbar({ categories }: any) {
         ];
 
         setResults(combined);
+        setActiveIndex(-1); // 🔥 reset
         setOpenResults(true);
       } catch (err) {
         console.error("SEARCH ERROR:", err);
@@ -80,9 +80,12 @@ export default function Navbar({ categories }: any) {
         {/* LEFT */}
         <LeftSection>
           <StyledLink href="/">
-            <Image src={Logo} alt="logo" width={40} height={40} />
+            <Image src={Logo} alt="logo" height={40} />
           </StyledLink>
+        </LeftSection>
 
+        {/* CENTER */}
+        <CenterSection>
           <NavLinks>
             <MegaMenu categories={categories} />
 
@@ -90,10 +93,7 @@ export default function Navbar({ categories }: any) {
               <NavLinkTypography>Om os</NavLinkTypography>
             </StyledLink>
           </NavLinks>
-        </LeftSection>
 
-        {/* CENTER */}
-        <CenterSection>
           <div style={{ position: "relative" }}>
             <form onSubmit={handleSearch}>
               <input
@@ -103,6 +103,35 @@ export default function Navbar({ categories }: any) {
                 onChange={(e) => {
                   setSearch(e.target.value);
                   setOpenResults(true);
+                }}
+                onKeyDown={(e) => {
+                  if (!openResults) return;
+
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setActiveIndex((prev) =>
+                      prev < results.length - 1 ? prev + 1 : prev,
+                    );
+                  }
+
+                  if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setActiveIndex((prev) => (prev > 0 ? prev - 1 : 0));
+                  }
+
+                  if (e.key === "Enter") {
+                    if (activeIndex >= 0) {
+                      const item = results[activeIndex];
+
+                      const url =
+                        item.type === "product"
+                          ? `/product/${item.slug}`
+                          : `/products/${item.slug}`;
+
+                      router.push(url);
+                      setOpenResults(false);
+                    }
+                  }
                 }}
                 onBlur={() => setTimeout(() => setOpenResults(false), 200)}
                 onFocus={() => setOpenResults(true)}
@@ -116,7 +145,7 @@ export default function Navbar({ categories }: any) {
               />
             </form>
 
-            {/* DROPDOWN */}
+            {/* 🔥 DROPDOWN */}
             {openResults && (
               <div
                 style={{
@@ -137,26 +166,84 @@ export default function Navbar({ categories }: any) {
                   </div>
                 )}
 
-                {results.map((item: any) => (
+                {results.map((item: any, index: number) => (
                   <div
                     key={item.id}
                     onMouseDown={(e) => e.preventDefault()}
+                    onMouseEnter={() => setActiveIndex(index)}
                     style={{
-                      padding: "8px 12px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      padding: "10px 12px",
                       borderBottom: "1px solid #eee",
+                      background: index === activeIndex ? "#f5f5f5" : "white",
+                      cursor: "pointer",
+                      transition: "background 0.15s ease",
                     }}
                   >
                     {item.type === "product" ? (
-                      <StyledLink href={`/product/${item.slug}`}>
-                        {item.name}
+                      <StyledLink
+                        href={`/product/${item.slug}`}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          width: "100%",
+                        }}
+                      >
+                        {/* 🖼️ IMAGE */}
+                        {item.images?.[0]?.src && (
+                          <img
+                            src={item.images[0].src}
+                            alt={item.name}
+                            width={40}
+                            height={40}
+                            style={{
+                              borderRadius: "6px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )}
+
+                        {/* 📝 TEXT */}
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: "0.9rem" }}>{item.name}</div>
+
+                          {/* 💰 PRICE */}
+                          <div style={{ fontSize: "0.8rem", color: "#666" }}>
+                            {item.price} kr.
+                          </div>
+                        </div>
                       </StyledLink>
                     ) : (
-                      <StyledLink href={`/products/${item.slug}`}>
-                        {item.name}
+                      <StyledLink
+                        href={`/products/${item.slug}`}
+                        style={{
+                          width: "100%",
+                          fontSize: "0.9rem",
+                        }}
+                      >
+                        Vis kategori "{item.name}"
                       </StyledLink>
                     )}
                   </div>
                 ))}
+
+                {/* Show all search results */}
+                {results.length > 0 && (
+                  <div
+                    style={{
+                      padding: "10px 12px",
+                      borderTop: "1px solid #eee",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <StyledLink href={`/products?search=${search}`}>
+                      Se alle søgeresultater →
+                    </StyledLink>
+                  </div>
+                )}
               </div>
             )}
           </div>
