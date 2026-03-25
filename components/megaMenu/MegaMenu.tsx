@@ -17,6 +17,23 @@ type Category = {
   parent: number;
 };
 
+function highlight(text: string, query: string) {
+  if (!query) return text;
+
+  const regex = new RegExp(`(${query})`, "gi");
+  const parts = text.split(regex);
+
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <span key={i} style={{ fontWeight: 600 }}>
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function MegaMenu({ categories }: { categories: Category[] }) {
   const [open, setOpen] = useState(false);
 

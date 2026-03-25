@@ -19,6 +19,25 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import MegaMenu from "../megaMenu/MegaMenu";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Fuse from "fuse.js";
+
+// highlight helper
+function highlight(text: string, query: string) {
+  if (!query) return text;
+
+  const regex = new RegExp(`(${query})`, "gi");
+  const parts = text.split(regex);
+
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <span key={i} style={{ fontWeight: 600 }}>
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
 
 export default function Navbar({ categories }: any) {
   const cartCount = 2;
@@ -27,43 +46,80 @@ export default function Navbar({ categories }: any) {
   const [results, setResults] = useState<any[]>([]);
   const [openResults, setOpenResults] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [cache, setCache] = useState<Record<string, any[]>>({});
+  const [allProducts, setAllProducts] = useState<any[]>([]);
 
   const router = useRouter();
 
-  // 🔥 AJAX search
   useEffect(() => {
-    const timeout = setTimeout(async () => {
+    async function loadProducts() {
+      const res = await fetch("/api/search?q=all");
+      const data = await res.json();
+
+      setAllProducts(data.products || []);
+    }
+
+    loadProducts();
+  }, []);
+
+  // AJAX search
+  useEffect(() => {
+    const timeout = setTimeout(() => {
       if (!search.trim()) {
         setResults([]);
         setOpenResults(false);
         return;
       }
 
-      try {
-        const res = await fetch(`/api/search?q=${search}`);
-        const data = await res.json();
+      if (!allProducts.length) return;
 
-        const combined = [
-          ...(data.products || []).map((p: any) => ({
-            ...p,
-            type: "product",
-          })),
-          ...(data.categories || []).map((c: any) => ({
-            ...c,
-            type: "category",
-          })),
-        ];
+      const query = search.toLowerCase();
 
-        setResults(combined);
-        setActiveIndex(-1); // 🔥 reset
-        setOpenResults(true);
-      } catch (err) {
-        console.error("SEARCH ERROR:", err);
+      // 1. exact matches
+      const exactMatches = allProducts.filter((p: any) =>
+        p.name.toLowerCase().includes(query),
+      );
+
+      // 2. fuzzy matches
+      const fuse = new Fuse(allProducts, {
+        keys: ["name"],
+        threshold: 0.4,
+      });
+
+      const fuzzyMatches = fuse.search(search).map((r) => r.item);
+
+      let combinedProducts = exactMatches;
+
+      // ONLY use fuzzy if no exact match
+      if (combinedProducts.length === 0) {
+        combinedProducts = fuzzyMatches;
       }
-    }, 300);
+
+      const formattedProducts = combinedProducts.map((p) => ({
+        ...p,
+        type: "product",
+      }));
+
+      // categories
+      const filteredCategories = categories
+        .filter((cat: any) => cat.name.toLowerCase().includes(query))
+        .map((c: any) => ({
+          ...c,
+          type: "category",
+        }));
+
+      const topProducts = formattedProducts.slice(0, 5);
+      const topCategories = filteredCategories.slice(0, 2);
+
+      const combined = [...topProducts, ...topCategories];
+
+      setResults(combined);
+      setActiveIndex(-1);
+      setOpenResults(true);
+    }, 200);
 
     return () => clearTimeout(timeout);
-  }, [search]);
+  }, [search, allProducts, categories]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,7 +201,7 @@ export default function Navbar({ categories }: any) {
               />
             </form>
 
-            {/* 🔥 DROPDOWN */}
+            {/* DROPDOWN */}
             {openResults && (
               <div
                 style={{
@@ -192,7 +248,6 @@ export default function Navbar({ categories }: any) {
                           width: "100%",
                         }}
                       >
-                        {/* 🖼️ IMAGE */}
                         {item.images?.[0]?.src && (
                           <img
                             src={item.images[0].src}
@@ -206,31 +261,24 @@ export default function Navbar({ categories }: any) {
                           />
                         )}
 
-                        {/* 📝 TEXT */}
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: "0.9rem" }}>{item.name}</div>
+                          <div style={{ fontSize: "0.9rem" }}>
+                            {highlight(item.name, search)}
+                          </div>
 
-                          {/* 💰 PRICE */}
                           <div style={{ fontSize: "0.8rem", color: "#666" }}>
                             {item.price} kr.
                           </div>
                         </div>
                       </StyledLink>
                     ) : (
-                      <StyledLink
-                        href={`/products/${item.slug}`}
-                        style={{
-                          width: "100%",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        Vis kategori "{item.name}"
+                      <StyledLink href={`/products/${item.slug}`}>
+                        Vis kategori: "{highlight(item.name, search)}"
                       </StyledLink>
                     )}
                   </div>
                 ))}
 
-                {/* Show all search results */}
                 {results.length > 0 && (
                   <div
                     style={{

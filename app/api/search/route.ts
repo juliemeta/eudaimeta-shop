@@ -1,27 +1,38 @@
-import { getProducts, getCategories } from "@/lib/woocommerce";
+import { getAllProductsCached, getCategories } from "@/lib/woocommerce";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const query = searchParams.get("q");
+  const query = searchParams.get("q")?.toLowerCase();
 
   if (!query) {
     return Response.json({ products: [], categories: [] });
   }
 
-  try {
-    // 🔍 products
-    const products = await getProducts(undefined, query);
-    products: products.slice(0, 5);
+  if (query === "all") {
+    const products = await getAllProductsCached();
 
-    // 🏷️ categories
+    return Response.json({
+      products,
+      categories: [],
+    });
+  }
+
+  try {
+    const allProducts = await getAllProductsCached();
+
+    const products = allProducts.filter((p: any) =>
+      p.name.toLowerCase().includes(query),
+    );
+
+    // categories
     const categories = await getCategories();
 
     const filteredCategories = categories.filter((cat: any) =>
-      cat.name.toLowerCase().includes(query.toLowerCase()),
+      cat.name.toLowerCase().includes(query),
     );
 
     return Response.json({
-      products: products?.slice(0, 5) || [],
+      products: products.slice(0, 5),
       categories: filteredCategories.slice(0, 3),
     });
   } catch (error) {

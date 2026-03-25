@@ -12,7 +12,7 @@ export async function getCategories() {
   const params = getAuthParams();
 
   const res = await fetch(`${BASE_URL}/products/categories?${params}`, {
-    next: { revalidate: 60 * 60 }, // 🔥 cache 1 time
+    next: { revalidate: 60 * 60 }, // cache for 1 hour
   });
 
   return res.json();
@@ -45,8 +45,43 @@ export async function getProducts(category?: string, search?: string) {
   }
 
   const res = await fetch(`${BASE_URL}/products?${params}`, {
-    cache: "no-store", // altid friske produkter
+    cache: "no-store",
   });
 
   return res.json();
+}
+
+// --- Get ALL products (for search) ---
+export async function getAllProducts() {
+  const params = getAuthParams();
+  params.append("per_page", "50");
+
+  let page = 1;
+  let allProducts: any[] = [];
+
+  while (true) {
+    params.set("page", String(page));
+
+    const res = await fetch(`${BASE_URL}/products?${params}`, {
+      next: { revalidate: 60 * 5 }, // cache for 5 mins
+    });
+
+    const data = await res.json();
+
+    if (!data.length) break;
+
+    allProducts = [...allProducts, ...data];
+    page++;
+  }
+
+  return allProducts;
+}
+
+let cachedProducts: any[] | null = null;
+
+export async function getAllProductsCached() {
+  if (cachedProducts) return cachedProducts;
+
+  cachedProducts = await getAllProducts();
+  return cachedProducts;
 }
