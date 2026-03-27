@@ -9,13 +9,28 @@ function getAuthParams() {
 
 // --- Categories (cached) ---
 export async function getCategories() {
-  const params = getAuthParams();
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_WC_URL}/wp-json/wc/v3/products/categories?per_page=100`,
+    {
+      headers: {
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `${process.env.WC_CONSUMER_KEY}:${process.env.WC_CONSUMER_SECRET}`,
+          ).toString("base64"),
+      },
+      next: { revalidate: 60 * 60 },
+    },
+  );
 
-  const res = await fetch(`${BASE_URL}/products/categories?${params}`, {
-    next: { revalidate: 60 * 60 }, // cache for 1 hour
-  });
+  const data = await res.json();
 
-  return res.json();
+  if (!Array.isArray(data)) {
+    console.error("Categories error:", data);
+    return [];
+  }
+
+  return data;
 }
 
 async function getCategoryIdFromSlug(slug: string) {
@@ -84,4 +99,11 @@ export async function getAllProductsCached() {
 
   cachedProducts = await getAllProducts();
   return cachedProducts;
+}
+
+// --- Single Product ---
+export async function getProduct(slug: string) {
+  const products = await getAllProductsCached();
+
+  return products.find((p: any) => p.slug === slug) || null;
 }

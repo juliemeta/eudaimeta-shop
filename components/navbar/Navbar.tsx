@@ -181,8 +181,8 @@ export default function Navbar({ categories }: any) {
 
                       const url =
                         item.type === "product"
-                          ? `/product/${item.slug}`
-                          : `/products/${item.slug}`;
+                          ? `/shop/${item.slug}`
+                          : `/shop/category/${item.slug}`;
 
                       router.push(url);
                       setOpenResults(false);
@@ -240,7 +240,7 @@ export default function Navbar({ categories }: any) {
                   >
                     {item.type === "product" ? (
                       <StyledLink
-                        href={`/product/${item.slug}`}
+                        href={`/shop/${item.slug}`}
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -272,7 +272,7 @@ export default function Navbar({ categories }: any) {
                         </div>
                       </StyledLink>
                     ) : (
-                      <StyledLink href={`/products/${item.slug}`}>
+                      <StyledLink href={`/shop/category/${item.slug}`}>
                         Vis kategori: "{highlight(item.name, search)}"
                       </StyledLink>
                     )}

@@ -22,6 +22,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const categories = await getCategories();
+  console.log("CATEGORIES RAW:", categories);
+  console.log("TYPE:", typeof categories);
+  console.log("IS ARRAY:", Array.isArray(categories));
 
   return (
     <html lang="da">
