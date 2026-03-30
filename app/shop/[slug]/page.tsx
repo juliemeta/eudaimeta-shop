@@ -1,4 +1,5 @@
-import { getAllProductsCached, getProduct } from "@/lib/woocommerce";
+import { getProduct } from "@/lib/woocommerce";
+import { SingleProductView } from "../../../components/singleProductView/SingleProductView";
 
 export default async function ProductPage({
   params,
@@ -9,16 +10,9 @@ export default async function ProductPage({
 
   const product = await getProduct(slug);
 
-  console.log("SLUG:", slug);
-
   if (!product) {
     return <div>Produkt ikke fundet</div>;
   }
 
-  return (
-    <div>
-      <h1>{product.name}</h1>
-      <p>{product.price} kr.</p>
-    </div>
-  );
+  return <SingleProductView product={product} />;
 }
