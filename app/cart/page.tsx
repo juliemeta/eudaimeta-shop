@@ -1,5 +1,6 @@
 "use client";
 
+import CartSummary from "@/components/cart/CartSummary";
 import { useCartStore } from "@/lib/store/cartStore";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,23 +8,10 @@ import Link from "next/link";
 export default function CartPage() {
   const { items, removeFromCart, updateQty } = useCartStore();
 
-  const total = useCartStore((state) => state.getTotal());
-
-  const handleCheckout = async () => {
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify({ items }),
-    });
-
-    const data = await res.json();
-
-    window.location.href = data.url;
-  };
-
   return (
     <>
       <div>
-        <h1>Kurv</h1>
+        <h1>Min indkøbskurv</h1>
 
         {items.length === 0 && <p>Din kurv er tom</p>}
 
@@ -52,10 +40,8 @@ export default function CartPage() {
             </div>
           </div>
         ))}
-
-        <h2>Total: {total.toFixed(2)} kr.</h2>
       </div>
-      <button onClick={handleCheckout}>Gå til betaling</button>
+      <CartSummary />
     </>
   );
 }

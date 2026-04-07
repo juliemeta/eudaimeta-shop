@@ -11,6 +11,22 @@ export async function POST(req: Request) {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
+    shipping_address_collection: {
+      allowed_countries: ["DK"],
+    },
+
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: 0,
+            currency: "dkk",
+          },
+          display_name: "Standard levering",
+        },
+      },
+    ],
 
     line_items: items.map((item: any) => ({
       price_data: {

@@ -10,28 +10,22 @@ export async function POST(req: Request) {
   let event: Stripe.Event;
 
   try {
-    console.log("👉 WEBHOOK CALLED");
-
     event = stripe.webhooks.constructEvent(
       body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
   } catch (err) {
-    console.error("❌ Webhook verify error:", err);
+    console.error("Webhook verify error:", err);
     return new NextResponse("Webhook error", { status: 400 });
   }
 
-  console.log("✅ EVENT TYPE:", event.type);
-
-  // 🔥 KUN DETTE EVENT ER VIGTIGT
   if (event.type === "checkout.session.completed") {
-    console.log("🔥 ENTERED CHECKOUT SESSION");
-
-    const session = event.data.object as Stripe.Checkout.Session;
+    const session = event.data.object as Stripe.Checkout.Session & {
+      shipping_details?: any;
+    };
 
     try {
-      // 🛒 HENT LINE ITEMS FRA STRIPE
       const lineItems = await stripe.checkout.sessions.listLineItems(
         session.id,
         {
@@ -40,9 +34,6 @@ export async function POST(req: Request) {
         },
       );
 
-      console.log("🛒 LINE ITEMS:", JSON.stringify(lineItems.data, null, 2));
-
-      // 🧾 SEND TIL WOOCOMMERCE
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_WC_URL}/wp-json/wc/v3/orders`,
         {
@@ -60,20 +51,59 @@ export async function POST(req: Request) {
             payment_method_title: "Stripe",
             set_paid: true,
 
+            // 🧑 Customer info (safe split)
+            billing: {
+              first_name: session.customer_details?.name?.split(" ")[0] ?? "",
+              last_name:
+                session.customer_details?.name?.split(" ").slice(1).join(" ") ??
+                "",
+              email: session.customer_details?.email ?? "",
+            },
+
+            // 📦 Shipping (kun hvis findes)
+            ...(session.shipping_details && {
+              shipping: {
+                first_name: session.shipping_details.name?.split(" ")[0] ?? "",
+                last_name:
+                  session.shipping_details.name
+                    ?.split(" ")
+                    .slice(1)
+                    .join(" ") ?? "",
+                address_1: session.shipping_details.address?.line1 ?? "",
+                address_2: session.shipping_details.address?.line2 ?? "",
+                city: session.shipping_details.address?.city ?? "",
+                postcode: session.shipping_details.address?.postal_code ?? "",
+                country: session.shipping_details.address?.country ?? "",
+              },
+            }),
+
+            // 🛒 Products
             line_items: lineItems.data.map((item: any) => ({
               product_id: Number(item.price.product.metadata.product_id),
               quantity: item.quantity,
             })),
+
+            // 💸 Stripe reference
+            meta_data: [
+              {
+                key: "stripe_session_id",
+                value: session.id,
+              },
+              {
+                key: "stripe_payment_intent",
+                value: String(session.payment_intent ?? ""),
+              },
+            ],
           }),
         },
       );
 
-      const text = await res.text();
-
-      console.log("🧾 WOO STATUS:", res.status);
-      console.log("🧾 WOO RESPONSE:", text);
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Woo error:", res.status, text);
+      }
     } catch (err) {
-      console.error("🔥 WEBHOOK CRASH:", err);
+      console.error("Webhook processing error:", err);
     }
   }
 
