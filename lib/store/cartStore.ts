@@ -6,17 +6,18 @@ import { persist } from "zustand/middleware";
 type CartItem = {
   id: number;
   name: string;
-  price: string;
+  price: number;
   image?: string;
   quantity: number;
   slug: string;
+  size?: string;
 };
 
 type CartStore = {
   items: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart: (id: number) => void;
-  updateQty: (id: number, qty: number) => void;
+  removeFromCart: (id: number, size?: string) => void;
+  updateQty: (id: number, qty: number, size?: string) => void;
   clearCart: () => void;
   getTotal: () => number;
 };
@@ -31,12 +32,14 @@ export const useCartStore = create<CartStore>()(
         set((state) => {
           const quantity = Math.max(1, item.quantity);
 
-          const existing = state.items.find((i) => i.id === item.id);
+          const existing = state.items.find(
+            (i) => i.id === item.id && (i.size ?? null) === (item.size ?? null),
+          );
 
           if (existing) {
             return {
               items: state.items.map((i) =>
-                i.id === item.id
+                i.id === item.id && i.size === item.size
                   ? { ...i, quantity: i.quantity + quantity }
                   : i,
               ),
@@ -49,23 +52,25 @@ export const useCartStore = create<CartStore>()(
         }),
 
       // ❌ Remove item
-      removeFromCart: (id) =>
+      removeFromCart: (id: number, size?: string) =>
         set((state) => ({
-          items: state.items.filter((i) => i.id !== id),
+          items: state.items.filter((i) => !(i.id === id && i.size === size)),
         })),
 
       // 🔢 Update quantity (auto remove if 0)
-      updateQty: (id, qty) =>
+      updateQty: (id, qty, size?: string) =>
         set((state) => {
           if (qty <= 0) {
             return {
-              items: state.items.filter((i) => i.id !== id),
+              items: state.items.filter(
+                (i) => !(i.id === id && i.size === size),
+              ),
             };
           }
 
           return {
             items: state.items.map((i) =>
-              i.id === id ? { ...i, quantity: qty } : i,
+              i.id === id && i.size === size ? { ...i, quantity: qty } : i,
             ),
           };
         }),

@@ -1,9 +1,12 @@
+"use client";
 import { useCartStore } from "@/lib/store/cartStore";
-import { CartSummaryWrapper } from "./CartSummary.styles";
+import { CartCheckoutButton, CartSummaryWrapper } from "./CartSummary.styles";
+import { formatPrice } from "@/lib/utils/format";
 
 export default function CartSummary() {
   const { items, getTotal } = useCartStore();
   const total = getTotal();
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleCheckout = async () => {
     const res = await fetch("/api/checkout", {
@@ -18,8 +21,15 @@ export default function CartSummary() {
 
   return (
     <CartSummaryWrapper>
-      <h2>Total: {total.toFixed(2)} kr.</h2>
-      {items.length > 0 && <button onClick={handleCheckout}>BETALING</button>}
+      <h2>I alt</h2>
+      <h3>{itemCount} varer</h3>
+      <h3>Subtotal {formatPrice(total)}</h3>
+      <h3>Levering</h3>
+      {items.length > 0 && (
+        <CartCheckoutButton onClick={handleCheckout}>
+          BETALING
+        </CartCheckoutButton>
+      )}
     </CartSummaryWrapper>
   );
 }

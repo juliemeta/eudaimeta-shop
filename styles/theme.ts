@@ -13,8 +13,8 @@ export const theme = createTheme({
 
   palette: {
     background: {
-      default: "#fffefd",
-      paper: "#ffffff",
+      default: "#fffefb",
+      paper: "#fafeff",
       subtle: "#f2f0ec",
       section: "#ece9e4",
       elevated: "#ffffff",
