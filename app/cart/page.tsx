@@ -4,8 +4,8 @@ import CartSummary from "@/components/cart/CartSummary";
 import { useCartStore } from "@/lib/store/cartStore";
 import Image from "next/image";
 import Link from "next/link";
-import { CartPageContainer } from "./page.styles";
-import { Grid, Typography } from "@mui/material";
+import { CartContent, CartPageContainer, CartWrapper } from "./page.styles";
+import { Box, Grid, Typography } from "@mui/material";
 
 export default function CartPage() {
   const { items, updateQty } = useCartStore();
@@ -13,22 +13,13 @@ export default function CartPage() {
   return (
     <CartPageContainer container>
       {/* 🛒 LEFT: CART ITEMS */}
-      <Grid size={{ xs: 12, md: 8 }}>
+      <CartWrapper size={{ xs: 12, md: 8 }}>
         <Typography variant="h1">Min indkøbskurv</Typography>
 
         {items.length === 0 && <p>Din kurv er tom</p>}
 
         {items.map((item) => (
-          <div
-            key={`${item.id}-${item.size}`}
-            style={{
-              display: "flex",
-              gap: 16,
-              marginBottom: 20,
-              borderBottom: "1px solid #eee",
-              paddingBottom: 16,
-            }}
-          >
+          <CartContent key={`${item.id}-${item.size}`}>
             {item.image && (
               <Image
                 src={item.image}
@@ -39,7 +30,7 @@ export default function CartPage() {
               />
             )}
 
-            <div style={{ flex: 1 }}>
+            <Box style={{ flex: 1 }}>
               <Link href={`/shop/${item.slug}`}>{item.name}</Link>
 
               <div>{item.price} kr.</div>
@@ -92,10 +83,10 @@ export default function CartPage() {
                   +
                 </button>
               </div>
-            </div>
-          </div>
+            </Box>
+          </CartContent>
         ))}
-      </Grid>
+      </CartWrapper>
 
       {/* 💳 RIGHT: SUMMARY */}
       <Grid size={{ xs: 12, md: 4 }}>
