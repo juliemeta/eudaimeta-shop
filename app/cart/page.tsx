@@ -4,6 +4,7 @@ import CartSummary from "@/components/cart/CartSummary";
 import { useCartStore } from "@/lib/store/cartStore";
 import Image from "next/image";
 import Link from "next/link";
+import UndoSnackbars from "@/components/cart/UndoSnackbars";
 import {
   CartContent,
   CartPageContainer,
@@ -14,7 +15,7 @@ import {
 import { Box, Grid, Typography } from "@mui/material";
 
 export default function CartPage() {
-  const { items, updateQty } = useCartStore();
+  const { items, updateQty, removeFromCart } = useCartStore();
 
   return (
     <CartPageContainer container>
@@ -51,9 +52,13 @@ export default function CartPage() {
               {/* Update quantity */}
               <SelectQuantityWrapper>
                 <SelectQuantityButton
-                  onClick={() =>
-                    updateQty(item.id, item.quantity - 1, item.size)
-                  }
+                  onClick={() => {
+                    if (item.quantity === 1) {
+                      removeFromCart(item.id, item.size);
+                    } else {
+                      updateQty(item.id, item.quantity - 1, item.size);
+                    }
+                  }}
                 >
                   -
                 </SelectQuantityButton>
@@ -77,6 +82,9 @@ export default function CartPage() {
       <Grid size={{ xs: 12, md: 4 }}>
         <CartSummary />
       </Grid>
+
+      {/* 👇 SNACKBARS */}
+      <UndoSnackbars />
     </CartPageContainer>
   );
 }
