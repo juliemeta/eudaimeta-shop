@@ -27,16 +27,12 @@ export function SingleProductView({ product }: any) {
 
   const addToCart = useCartStore((state) => state.addToCart);
 
-  // 📦 Get sizes from attributes
+  // 📦 Sizes fra variations
   const sizes = Array.from(
     new Set(
       variations.flatMap((v) => v.attributes.map((attr: any) => attr.option)),
     ),
   );
-
-  useEffect(() => {
-    console.log("SIZES:", sizes);
-  }, [sizes]);
 
   // 🌐 Fetch variations
   useEffect(() => {
@@ -49,15 +45,11 @@ export function SingleProductView({ product }: any) {
         setVariations(data);
       })
       .catch(console.error);
-    console.log("SIZES:", sizes);
   }, [product.id, product.type]);
 
   // 🎯 Match selected size → variation
   useEffect(() => {
     if (!selectedSize || variations.length === 0) return;
-
-    console.log("selectedSize:", selectedSize);
-    console.log("variations:", variations);
 
     const normalize = (str: string) =>
       str.toLowerCase().replace(/\s/g, "").replace("×", "x");
@@ -71,18 +63,27 @@ export function SingleProductView({ product }: any) {
     setSelectedVariation(match || null);
   }, [selectedSize, variations]);
 
-  // 🚀 Auto-select first size
+  // 🚀 Auto-select første size
   useEffect(() => {
     if (sizes.length > 0 && !selectedSize) {
       setSelectedSize(sizes[0]);
     }
   }, [sizes, selectedSize]);
 
+  // 🖼️ Skift billede ved variation
   useEffect(() => {
     if (selectedVariation?.image?.src) {
       setSelectedImage(selectedVariation.image.src);
+    } else {
+      setSelectedImage(product.images?.[0]?.src);
     }
-  }, [selectedVariation]);
+  }, [selectedVariation, product.images]);
+
+  // ✅ 🔥 SAMLET STOCK LOGIK
+  const isInStock =
+    product.type === "variable"
+      ? selectedVariation?.stock_status === "instock"
+      : product.stock_status === "instock";
 
   return (
     <Box sx={{ maxWidth: 1200, mx: "auto", p: 3 }}>
@@ -94,6 +95,7 @@ export function SingleProductView({ product }: any) {
               src={selectedImage || placeholderImage}
               alt={product.name}
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: "contain" }}
             />
           </Box>
@@ -116,6 +118,7 @@ export function SingleProductView({ product }: any) {
                   src={img.src}
                   alt=""
                   fill
+                  sizes="70px"
                   style={{ objectFit: "cover" }}
                 />
               </Box>
@@ -134,8 +137,8 @@ export function SingleProductView({ product }: any) {
             {selectedVariation?.price || product.price} kr.
           </Typography>
 
-          {/* If out of stock 👜🚫 */}
-          {selectedVariation?.stock_status === "outofstock" && (
+          {/* 🚫 Out of stock */}
+          {!isInStock && (
             <Typography color="error" sx={{ mt: 1 }}>
               Ikke på lager
             </Typography>
@@ -175,7 +178,10 @@ export function SingleProductView({ product }: any) {
 
           {/* Quantity */}
           <Box sx={{ display: "flex", alignItems: "center", mt: 3 }}>
-            <IconButton onClick={() => setQty(Math.max(1, qty - 1))}>
+            <IconButton
+              onClick={() => setQty(Math.max(1, qty - 1))}
+              disabled={!isInStock}
+            >
               -
             </IconButton>
 
@@ -184,9 +190,12 @@ export function SingleProductView({ product }: any) {
               size="small"
               sx={{ width: 60, mx: 1 }}
               inputProps={{ style: { textAlign: "center" } }}
+              disabled={!isInStock}
             />
 
-            <IconButton onClick={() => setQty(qty + 1)}>+</IconButton>
+            <IconButton onClick={() => setQty(qty + 1)} disabled={!isInStock}>
+              +
+            </IconButton>
           </Box>
 
           {/* 🛒 Add to cart */}
@@ -198,7 +207,7 @@ export function SingleProductView({ product }: any) {
               "&:hover": { backgroundColor: "#b38cc9" },
             }}
             fullWidth
-            disabled={product.type === "variable" && !selectedVariation}
+            disabled={!isInStock}
             onClick={() =>
               addToCart({
                 id: product.id,
