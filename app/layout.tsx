@@ -28,7 +28,12 @@ export default async function RootLayout({
         <ThemeRegistry>
           <Navbar categories={categories} />
 
-          <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
+          <Box
+            sx={{
+              bgcolor: "background.default",
+              minHeight: "100vh",
+            }}
+          >
             {children}
           </Box>
         </ThemeRegistry>

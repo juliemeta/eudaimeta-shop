@@ -199,7 +199,8 @@ export default function Navbar({ categories }: any) {
                   borderRadius: "8px",
                   border: "1px solid #ccc",
                   outline: "none",
-                  width: "250px",
+                  width: "100%",
+                  maxWidth: "250px",
                 }}
               />
             </form>

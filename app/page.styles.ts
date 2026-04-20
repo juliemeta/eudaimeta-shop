@@ -1,6 +1,5 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import { red } from "@mui/material/colors";
 
 export const HeroContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.subtle,
