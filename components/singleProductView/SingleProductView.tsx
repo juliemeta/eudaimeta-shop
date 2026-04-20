@@ -170,8 +170,6 @@ export function SingleProductView({ product }: any) {
           {/* 📏 Size selector */}
           {sizes.length > 0 && (
             <Box sx={{ mt: 3 }}>
-              <Typography variant="subtitle1">Størrelse</Typography>
-
               <FormControl fullWidth sx={{ mt: 1 }} error={sizeError}>
                 <InputLabel id="size-select-label">Størrelse</InputLabel>
 
