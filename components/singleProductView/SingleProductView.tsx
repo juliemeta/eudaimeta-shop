@@ -11,10 +11,11 @@ import {
   TextField,
   Divider,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import placeholderImage from "../../public/assets/images/placeholder.png";
 import { useCartStore } from "@/lib/store/cartStore";
+import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 
 export function SingleProductView({ product }: any) {
   const [selectedImage, setSelectedImage] = useState(product.images?.[0]?.src);
@@ -24,15 +25,27 @@ export function SingleProductView({ product }: any) {
   const [variations, setVariations] = useState<any[]>([]);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedVariation, setSelectedVariation] = useState<any>(null);
+  const [sizeError, setSizeError] = useState(false);
 
   const addToCart = useCartStore((state) => state.addToCart);
 
-  // 📦 Sizes fra variations
-  const sizes = Array.from(
-    new Set(
-      variations.flatMap((v) => v.attributes.map((attr: any) => attr.option)),
-    ),
+  // 📦 Sizes from variations
+  const sizes = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          variations.flatMap((v) =>
+            v.attributes.map((attr: any) => attr.option),
+          ),
+        ),
+      ).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+    [variations],
   );
+
+  const allOutOfStock =
+    product.type === "variable" &&
+    variations.length > 0 &&
+    variations.every((v) => v.stock_status !== "instock");
 
   // 🌐 Fetch variations
   useEffect(() => {
@@ -63,14 +76,7 @@ export function SingleProductView({ product }: any) {
     setSelectedVariation(match || null);
   }, [selectedSize, variations]);
 
-  // 🚀 Auto-select første size
-  useEffect(() => {
-    if (sizes.length > 0 && !selectedSize) {
-      setSelectedSize(sizes[0]);
-    }
-  }, [sizes, selectedSize]);
-
-  // 🖼️ Skift billede ved variation
+  // 🖼️ Change photo when choosing variation
   useEffect(() => {
     if (selectedVariation?.image?.src) {
       setSelectedImage(selectedVariation.image.src);
@@ -79,10 +85,12 @@ export function SingleProductView({ product }: any) {
     }
   }, [selectedVariation, product.images]);
 
-  // ✅ 🔥 SAMLET STOCK LOGIK
+  // ✅ 🔥 Stock logic
   const isInStock =
     product.type === "variable"
-      ? selectedVariation?.stock_status === "instock"
+      ? selectedVariation
+        ? selectedVariation.stock_status === "instock"
+        : true //
       : product.stock_status === "instock";
 
   return (
@@ -138,37 +146,87 @@ export function SingleProductView({ product }: any) {
           </Typography>
 
           {/* 🚫 Out of stock */}
-          {!isInStock && (
+          {product.type === "simple" && !isInStock && (
             <Typography color="error" sx={{ mt: 1 }}>
               Ikke på lager
             </Typography>
           )}
+
+          {product.type === "variable" && allOutOfStock && (
+            <Typography color="error" sx={{ mt: 1 }}>
+              Produktet er udsolgt
+            </Typography>
+          )}
+
+          {product.type === "variable" &&
+            !allOutOfStock &&
+            selectedVariation &&
+            selectedVariation.stock_status !== "instock" && (
+              <Typography color="error" sx={{ mt: 1 }}>
+                Ikke på lager
+              </Typography>
+            )}
 
           {/* 📏 Size selector */}
           {sizes.length > 0 && (
             <Box sx={{ mt: 3 }}>
               <Typography variant="subtitle1">Størrelse</Typography>
 
-              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                {sizes.map((size: string) => {
-                  const isAvailable = variations.some(
-                    (v) =>
-                      v.attributes.some((attr: any) => attr.option === size) &&
-                      v.stock_status === "instock",
-                  );
+              <FormControl fullWidth sx={{ mt: 1 }} error={sizeError}>
+                <InputLabel id="size-select-label">Størrelse</InputLabel>
 
-                  return (
-                    <Button
-                      key={size}
-                      variant={selectedSize === size ? "contained" : "outlined"}
-                      onClick={() => setSelectedSize(size)}
-                      disabled={!isAvailable}
-                    >
-                      {size}
-                    </Button>
-                  );
-                })}
-              </Box>
+                <Select
+                  labelId="size-select-label"
+                  value={selectedSize}
+                  label="Størrelse"
+                  onChange={(e) => {
+                    setSelectedSize(e.target.value);
+                    setSizeError(false);
+                  }}
+                >
+                  {sizes.map((size: string) => {
+                    const isAvailable = variations.some(
+                      (v) =>
+                        v.attributes.some(
+                          (attr: any) => attr.option === size,
+                        ) && v.stock_status === "instock",
+                    );
+
+                    return (
+                      <MenuItem
+                        key={size}
+                        value={size}
+                        disabled={
+                          product.type === "simple"
+                            ? !isAvailable
+                            : selectedVariation
+                              ? !isAvailable
+                              : false
+                        }
+                        sx={{ opacity: isAvailable ? 1 : 0.5 }}
+                      >
+                        {size} {!isAvailable ? "(Udsolgt)" : ""}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+
+              {/* Error message */}
+              {sizeError && (
+                <Typography
+                  sx={{
+                    mt: 1,
+                    p: 1.5,
+                    backgroundColor: "#f8e7ea",
+                    color: "#8a1c2c",
+                    fontSize: 14,
+                    borderRadius: 1,
+                  }}
+                >
+                  Vælg mellem de tilgængelige størrelsesmuligheder
+                </Typography>
+              )}
             </Box>
           )}
 
@@ -207,8 +265,30 @@ export function SingleProductView({ product }: any) {
               "&:hover": { backgroundColor: "#b38cc9" },
             }}
             fullWidth
-            disabled={!isInStock}
-            onClick={() =>
+            disabled={product.type === "simple" && !isInStock}
+            onClick={() => {
+              // ❌ Variant missing
+              if (product.type === "variable" && !selectedVariation) {
+                setSizeError(true);
+                return;
+              }
+
+              // ❌ Chosen variant out of stock
+              if (
+                product.type === "variable" &&
+                selectedVariation?.stock_status !== "instock"
+              ) {
+                return;
+              }
+
+              // ❌ Simple product out of stock
+              if (product.type === "simple" && !isInStock) {
+                return;
+              }
+
+              // ✅ Reset error
+              setSizeError(false);
+
               addToCart({
                 id: product.id,
                 variation_id: selectedVariation?.id,
@@ -218,16 +298,13 @@ export function SingleProductView({ product }: any) {
                 quantity: qty,
                 slug: product.slug,
                 size: selectedSize,
-              })
-            }
+              });
+            }}
           >
             Tilføj til kurv
           </Button>
 
-          {/* Payment */}
-          <Button variant="outlined" sx={{ mt: 2 }} fullWidth>
-            Pay with GPay
-          </Button>
+          {/* Category display */}
 
           <Divider sx={{ my: 3 }} />
 
