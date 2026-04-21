@@ -52,6 +52,12 @@ export default function Navbar({ categories }: any) {
   const [cache, setCache] = useState<Record<string, any[]>>({});
   const [allProducts, setAllProducts] = useState<any[]>([]);
 
+  const handleSelect = () => {
+    setOpenResults(false);
+    setSearch("");
+    setActiveIndex(-1);
+  };
+
   const router = useRouter();
 
   useEffect(() => {
@@ -130,7 +136,7 @@ export default function Navbar({ categories }: any) {
     if (!search.trim()) return;
 
     router.push(`/products?search=${search}`);
-    setOpenResults(false);
+    handleSelect();
   };
 
   return (
@@ -180,7 +186,7 @@ export default function Navbar({ categories }: any) {
                           : `/shop/category/${item.slug}`;
 
                       router.push(url);
-                      setOpenResults(false);
+                      handleSelect();
                     }
                   }
                 }}
@@ -223,7 +229,7 @@ export default function Navbar({ categories }: any) {
                     key={item.id}
                     onMouseDown={(e) => e.preventDefault()}
                     onMouseEnter={() => setActiveIndex(index)}
-                    onClick={() => setOpenResults(false)}
+                    onClick={handleSelect}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -238,6 +244,7 @@ export default function Navbar({ categories }: any) {
                     {item.type === "product" ? (
                       <StyledLink
                         href={`/shop/${item.slug}`}
+                        onClick={handleSelect}
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -269,7 +276,10 @@ export default function Navbar({ categories }: any) {
                         </div>
                       </StyledLink>
                     ) : (
-                      <StyledLink href={`/shop/category/${item.slug}`}>
+                      <StyledLink
+                        href={`/shop/category/${item.slug}`}
+                        onClick={handleSelect}
+                      >
                         Vis kategori: "{highlight(item.name, search)}"
                       </StyledLink>
                     )}
@@ -284,7 +294,10 @@ export default function Navbar({ categories }: any) {
                       fontWeight: 500,
                     }}
                   >
-                    <StyledLink href={`/products?search=${search}`}>
+                    <StyledLink
+                      href={`/products?search=${search}`}
+                      onClick={handleSelect}
+                    >
                       Se alle søgeresultater →
                     </StyledLink>
                   </div>
