@@ -7,7 +7,6 @@ import {
   StyledToolbar,
   NavLinks,
   StyledLink,
-  NavLinkTypography,
   CenterSection,
   LeftSection,
   RightSection,
@@ -21,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import { useCartStore } from "@/lib/store/cartStore";
+import MenuIcon from "@mui/icons-material/Menu";
 
 // highlight helper
 function highlight(text: string, query: string) {
@@ -145,14 +145,6 @@ export default function Navbar({ categories }: any) {
 
         {/* CENTER */}
         <CenterSection>
-          <NavLinks>
-            <MegaMenu categories={categories} />
-
-            <StyledLink href="/about">
-              <NavLinkTypography>Om os</NavLinkTypography>
-            </StyledLink>
-          </NavLinks>
-
           <div style={{ position: "relative" }}>
             <form onSubmit={handleSearch}>
               <input
@@ -205,7 +197,7 @@ export default function Navbar({ categories }: any) {
               />
             </form>
 
-            {/* DROPDOWN */}
+            {/* SEARCH DROPDOWN */}
             {openResults && (
               <div
                 style={{
@@ -231,6 +223,7 @@ export default function Navbar({ categories }: any) {
                     key={item.id}
                     onMouseDown={(e) => e.preventDefault()}
                     onMouseEnter={() => setActiveIndex(index)}
+                    onClick={() => setOpenResults(false)}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -310,6 +303,9 @@ export default function Navbar({ categories }: any) {
               </CartBadge>
             </CartButton>
           </Link>
+          <NavLinks>
+            <MegaMenu categories={categories} />
+          </NavLinks>
         </RightSection>
       </StyledToolbar>
     </StyledAppBar>
