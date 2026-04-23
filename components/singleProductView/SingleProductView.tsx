@@ -17,6 +17,7 @@ import placeholderImage from "../../public/assets/images/placeholder.png";
 import { useCartStore } from "@/lib/store/cartStore";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { StyledContainer } from "@/styles/Container";
+import { StyledLink } from "../navbar/Navbar.styles";
 
 export function SingleProductView({ product }: any) {
   const [selectedImage, setSelectedImage] = useState(product.images?.[0]?.src);
@@ -29,6 +30,7 @@ export function SingleProductView({ product }: any) {
   const [sizeError, setSizeError] = useState(false);
 
   const addToCart = useCartStore((state) => state.addToCart);
+  const category = product.categories?.[0];
 
   // 📦 Sizes from variations
   const sizes = useMemo(
@@ -140,25 +142,21 @@ export function SingleProductView({ product }: any) {
           <Typography variant="h5" gutterBottom>
             {product.name}
           </Typography>
-
           {/* 💲 Price */}
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             {selectedVariation?.price || product.price} kr.
           </Typography>
-
           {/* 🚫 Out of stock */}
           {product.type === "simple" && !isInStock && (
             <Typography color="error" sx={{ mt: 1 }}>
               Ikke på lager
             </Typography>
           )}
-
           {product.type === "variable" && allOutOfStock && (
             <Typography color="error" sx={{ mt: 1 }}>
               Produktet er udsolgt
             </Typography>
           )}
-
           {product.type === "variable" &&
             !allOutOfStock &&
             selectedVariation &&
@@ -167,12 +165,10 @@ export function SingleProductView({ product }: any) {
                 Ikke på lager
               </Typography>
             )}
-
           {/* Product short description */}
           <Typography sx={{ mt: 2, color: "text.secondary" }}>
             {product.short_description?.replace(/<[^>]+>/g, "")}
           </Typography>
-
           {/* 📏 Size selector */}
           {sizes.length > 0 && (
             <Box sx={{ mt: 3 }}>
@@ -233,7 +229,6 @@ export function SingleProductView({ product }: any) {
               )}
             </Box>
           )}
-
           {/* Quantity */}
           <Box sx={{ display: "flex", alignItems: "center", mt: 3 }}>
             <IconButton
@@ -255,7 +250,6 @@ export function SingleProductView({ product }: any) {
               +
             </IconButton>
           </Box>
-
           {/* 🛒 Add to cart */}
           <Button
             variant="contained"
@@ -303,14 +297,21 @@ export function SingleProductView({ product }: any) {
           >
             Tilføj til kurv
           </Button>
-
           {/* Category display */}
-
           <Divider sx={{ my: 3 }} />
-
-          <Typography variant="body2" color="text.secondary">
-            Kategori: {product.categories?.[0]?.name}
-          </Typography>
+          {product.categories?.length > 0 && (
+            <Typography variant="body2" color="text.secondary">
+              Kategorier:{" "}
+              {product.categories.map((cat: any, index: number) => (
+                <span key={cat.id}>
+                  <StyledLink href={`/shop/category/${cat.slug}`}>
+                    {cat.name}
+                  </StyledLink>
+                  {index < product.categories.length - 1 && ", "}
+                </span>
+              ))}
+            </Typography>
+          )}
         </Grid>
       </Grid>
 
