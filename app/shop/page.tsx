@@ -8,7 +8,5 @@ export default async function Page({ searchParams }: any) {
 
   const products = await getProducts(undefined, undefined, undefined, sort);
 
-  console.log("SHOP SORT:", sort);
-
   return <ProductsView products={products} />;
 }

@@ -11,9 +11,9 @@ export default function FrontPageHero() {
       <HeroContainer>
         <HeroWrapper>
           <HeroContent>
-            <Typography variant="h1">Festivalsæson</Typography>
+            <Typography variant="h1">Festival & sommer</Typography>
             <Button variant="contained" href="/tag/festival">
-              Se mere
+              Shop nu
             </Button>
           </HeroContent>
         </HeroWrapper>
