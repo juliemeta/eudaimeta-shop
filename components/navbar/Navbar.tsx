@@ -20,7 +20,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import { useCartStore } from "@/lib/store/cartStore";
-import MenuIcon from "@mui/icons-material/Menu";
 
 // highlight helper
 function highlight(text: string, query: string) {

@@ -1,6 +1,5 @@
 "use client";
 
-import SortSelect from "../filters/SortSelect";
 import ProductCard from "../productCard/ProductCard";
 import { ProductGridContainer } from "./ProductGrid.styles";
 
@@ -15,7 +14,6 @@ type Product = {
 export default function ProductGrid({ products }: { products: Product[] }) {
   return (
     <>
-      <SortSelect />
       <ProductGridContainer>
         {Array.isArray(products) &&
           products.map((product) => (

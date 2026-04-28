@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ProductGrid from "./ProductGrid";
 import { Typography } from "@mui/material";
 import { body } from "framer-motion/client";
+import SortSelect from "../filters/SortSelect";
 
 export default function InfiniteProductGrid({
   initialProducts,
@@ -59,6 +60,7 @@ export default function InfiniteProductGrid({
 
   return (
     <>
+      <SortSelect />
       <ProductGrid products={products} />
 
       {loading && <Typography>Loader...</Typography>}

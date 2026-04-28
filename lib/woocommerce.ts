@@ -84,9 +84,10 @@ export async function getProducts(
   tag?: string,
   sort?: string,
   page: number = 1,
+  featured?: boolean,
+  perPage: number = 50,
 ) {
   const params = new URLSearchParams();
-  console.log("SORT PARAM:", sort);
 
   if (category) {
     const categoryId = isNaN(Number(category))
@@ -102,7 +103,7 @@ export async function getProducts(
     params.append("search", search);
   }
 
-  // --- tags
+  // --- product tags
   if (tag) {
     const tagId = isNaN(Number(tag)) ? await getTagIdFromSlug(tag) : tag;
 
@@ -111,7 +112,7 @@ export async function getProducts(
     }
   }
 
-  // --- sorting
+  // --- sort by
   if (sort === "price-asc") {
     params.append("orderby", "price");
     params.append("order", "asc");
@@ -127,12 +128,19 @@ export async function getProducts(
     params.append("order", "desc");
   }
 
-  params.append("per_page", "50");
+  if (sort === "popular") {
+    params.append("orderby", "popularity");
+  }
+
+  // --- featured products
+  if (featured) {
+    params.append("featured", "true");
+  }
+
+  params.append("per_page", String(perPage));
   params.append("page", String(page));
 
   const url = `${BASE_URL}/products?${params}`;
-
-  console.log("FINAL URL:", url);
 
   return safeFetch(url, {
     cache: "no-store",
