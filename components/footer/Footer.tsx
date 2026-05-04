@@ -1,9 +1,11 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Logo from "../logo/Logo";
 import { FooterWrapper } from "./Footer.styles";
 import InstagramGrid from "../instagramGrid/InstagramGrid";
+import FooterCredits from "./FooterCredits";
+import StyledFooterMenu from "./FooterMenu";
 
 export default function Footer() {
   return (
@@ -12,7 +14,8 @@ export default function Footer() {
         <Logo width={100} />
       </Box>
       <InstagramGrid />
-      <Typography variant="h1">Hello from footer</Typography>
+      <StyledFooterMenu />
+      <FooterCredits />
     </FooterWrapper>
   );
 }
