@@ -2,20 +2,20 @@
 
 import { Box } from "@mui/material";
 import Logo from "../logo/Logo";
-import { FooterWrapper } from "./Footer.styles";
+import { FooterContainer } from "./Footer.styles";
 import InstagramGrid from "../instagramGrid/InstagramGrid";
 import FooterCredits from "./FooterCredits";
-import StyledFooterMenu from "./FooterMenu";
+import FooterMenu from "./FooterMenu";
 
-export default function Footer() {
+export default function StyledFooter() {
   return (
-    <FooterWrapper>
+    <FooterContainer>
       <Box textAlign="center">
         <Logo width={100} />
       </Box>
       <InstagramGrid />
-      <StyledFooterMenu />
+      <FooterMenu />
       <FooterCredits />
-    </FooterWrapper>
+    </FooterContainer>
   );
 }

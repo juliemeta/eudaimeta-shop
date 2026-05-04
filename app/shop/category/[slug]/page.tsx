@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import InfiniteProductGrid from "@/components/productGrid/InfiniteProductGrid";
 import { getProducts, getCategories } from "@/lib/woocommerce";
-import { StyledContainer } from "@/styles/Container";
+import { StyledContainer } from "@/styles/StyledContainer";
 import { Typography } from "@mui/material";
 
 export default async function CategoryPage(props: any) {

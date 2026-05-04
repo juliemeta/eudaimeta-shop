@@ -1,5 +1,18 @@
-import { FooterMenuWrapper } from "./FooterMenu.styles";
+import Link from "next/link";
+import {
+  FooterMenuContainer,
+  FooterMenuContent,
+  FooterMenuWrapper,
+} from "./FooterMenu.styles";
 
-export default function StyledFooterMenu() {
-  return <FooterMenuWrapper></FooterMenuWrapper>;
+export default function FooterMenu() {
+  return (
+    <FooterMenuContainer>
+      <FooterMenuWrapper>
+        <FooterMenuContent>
+          <Link href="@about">Om os</Link>
+        </FooterMenuContent>
+      </FooterMenuWrapper>
+    </FooterMenuContainer>
+  );
 }

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { StyledContainer } from "@/styles/Container";
+import { StyledContainer } from "@/styles/StyledContainer";
 import FrontPageHero from "@/components/frontPageHero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
 import { getCategories, getProducts } from "@/lib/woocommerce";

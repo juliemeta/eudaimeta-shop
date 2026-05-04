@@ -74,6 +74,7 @@ export const theme = createTheme({
       lineHeight: 1.25,
       color: "#d18bff",
       textAlign: "center",
+      marginBottom: "15px",
     },
 
     h3: {

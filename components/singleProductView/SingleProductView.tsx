@@ -16,7 +16,7 @@ import Image from "next/image";
 import placeholderImage from "../../public/assets/images/placeholder.png";
 import { useCartStore } from "@/lib/store/cartStore";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import { StyledContainer } from "@/styles/Container";
+import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledLink } from "../navbar/Navbar.styles";
 
 export function SingleProductView({ product }: any) {

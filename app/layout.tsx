@@ -3,7 +3,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import { Box } from "@mui/material";
 import { getCategories } from "@/lib/woocommerce";
 import ThemeRegistry from "./themeRegistry";
-import Footer from "@/components/footer/Footer";
+import StyledFooter from "@/components/footer/Footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -38,7 +38,7 @@ export default async function RootLayout({
 
             <Box sx={{ flex: 1 }}>{children}</Box>
 
-            <Footer />
+            <StyledFooter />
           </Box>
         </ThemeRegistry>
       </body>
