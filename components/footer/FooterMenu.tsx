@@ -1,18 +1,25 @@
-import Link from "next/link";
-import {
-  FooterMenuContainer,
-  FooterMenuContent,
-  FooterMenuWrapper,
-} from "./FooterMenu.styles";
+import { FooterMenuContent, FooterMenuWrapper } from "./FooterMenu.styles";
+import { StyledLink } from "../navbar/Navbar.styles";
+import Divider from "@mui/material/Divider";
+import { StyledContainer } from "@/styles/StyledContainer";
+import { Box } from "@mui/material";
 
 export default function FooterMenu() {
   return (
-    <FooterMenuContainer>
+    <StyledContainer>
+      <Divider variant="middle" />
       <FooterMenuWrapper>
         <FooterMenuContent>
-          <Link href="@about">Om os</Link>
+          <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+            <Box component="li">
+              <StyledLink href="/about">Om os</StyledLink>
+            </Box>
+            <Box component="li">
+              <StyledLink href="/print-on-demand">Print on demand</StyledLink>
+            </Box>
+          </Box>
         </FooterMenuContent>
       </FooterMenuWrapper>
-    </FooterMenuContainer>
+    </StyledContainer>
   );
 }

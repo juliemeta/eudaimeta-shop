@@ -1,9 +1,4 @@
-import { Box, Grid, styled } from "@mui/material";
-
-export const FooterMenuContainer = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(3),
-  marginTop: theme.spacing(5),
-}));
+import { Grid, styled } from "@mui/material";
 
 export const FooterMenuWrapper = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(3),
