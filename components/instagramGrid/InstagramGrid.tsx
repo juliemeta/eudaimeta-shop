@@ -28,7 +28,9 @@ const posts = [
 export default function InstagramGrid() {
   return (
     <>
-      <Typography variant="h6">Følg os på Instagram</Typography>
+      <Typography variant="h6" component="p" sx={{ paddingBottom: 1 }}>
+        Følg os på Instagram
+      </Typography>
       <Box
         sx={{
           maxWidth: 600,
@@ -39,10 +41,13 @@ export default function InstagramGrid() {
           sx={{
             display: "grid",
             gridTemplateColumns: {
-              xs: "repeat(2, 1fr)",
-              md: "repeat(4, 1fr)",
+              xs: "repeat(2, 140px)",
+              md: "repeat(4, 140px)",
             },
+            justifyContent: "center",
             gap: 1,
+            maxWidth: 600,
+            mx: "auto",
           }}
         >
           {posts.map((post) => (
@@ -56,7 +61,6 @@ export default function InstagramGrid() {
                 position: "relative",
                 display: "block",
                 overflow: "hidden",
-                paddingTop: 1,
 
                 "&:hover .overlay": {
                   opacity: 1,
@@ -73,7 +77,7 @@ export default function InstagramGrid() {
                 src={post.image}
                 alt=""
                 sx={{
-                  width: "100%",
+                  width: "95%",
                   aspectRatio: "1 / 1",
                   objectFit: "cover",
                   transition: "transform 0.3s ease",
