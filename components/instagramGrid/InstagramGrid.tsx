@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
+import Logo from "../logo/LogoLight";
 
 const posts = [
   {
@@ -10,8 +11,8 @@ const posts = [
   },
   {
     id: "2",
-    image: "/assets/images/instagram/post1.jpeg",
-    link: "https://www.instagram.com/p/YYYYYYYY/",
+    image: "/assets/images/instagram/post2.jpeg",
+    link: "https://www.instagram.com/p/CTUPme2o9Vp/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
   },
   {
     id: "3",
@@ -28,9 +29,13 @@ const posts = [
 export default function InstagramGrid() {
   return (
     <>
-      <Typography variant="h6" component="p" sx={{ paddingBottom: 1 }}>
-        Følg os på Instagram
+      <Box textAlign="center">
+        <Logo width={100} />
+      </Box>
+      <Typography variant="h4" component="p">
+        Følg os på Instagram 📸
       </Typography>
+
       <Box
         sx={{
           maxWidth: 600,
@@ -79,6 +84,7 @@ export default function InstagramGrid() {
                 sx={{
                   width: "95%",
                   aspectRatio: "1 / 1",
+                  borderRadius: "4px",
                   objectFit: "cover",
                   transition: "transform 0.3s ease",
                 }}

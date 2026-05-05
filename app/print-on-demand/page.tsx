@@ -53,17 +53,20 @@ export default function printOnDemand() {
           er ikke i mål endnu, men vi forbedrer løbende vores løsninger.
           Derudover kører vi heller ikke med tidsbegrænsede sales, som *kan*
           føre til impulskøb, har vi hørt... så hos os behøver du heller ikke
-          være nervøs for, at varen du har forelsket dig i, er billigere i
-          morgen eller om en måned.
-          <br />
-          <Link href="/print-on-demand" style={{ textDecoration: "none" }}>
-            👉 Udforsk vores univers og find dine yndlings items blandt vores
-            produkter, der er skabt med omtanke.
-          </Link>
+          være nervøs for, at den ting du har forelsket dig i, bliver billigere
+          i morgen eller om en måned.
         </Typography>
       </StyledTextWrapper>
-      <br />
-      <Box sx={{ textAlign: "center" }}>-💚-</Box>
+
+      <Box sx={{ textAlign: "center" }}>
+        <br />
+        <Link href="/shop" style={{ textDecoration: "none" }}>
+          👉 Udforsk vores univers af produkter skabt med omtanke.
+        </Link>
+        <br />
+        <br />
+        -💚-
+      </Box>
     </StyledContainer>
   );
 }

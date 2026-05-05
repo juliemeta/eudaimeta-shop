@@ -31,15 +31,14 @@ export default function about() {
         <br />
         <Typography variant="h2">Produceret efter behov</Typography>
         <Typography>
-          Vi producerer ikke varer på forhånd. Vi producerer først, når varen er
-          solgt. Det betyder, at vi undgår overproduktion og unødvendigt spild.
-          Når du køber en t-shirt hos os, ligger selve t-shirten klar, men
-          designet bliver først trykt, når din ordre er lagt. Det samme gælder
-          for alle vores produkter fra krus og tasker til babytøj og bikinier.
-          På den måde er hvert produkt skabt specifikt til dig. Vi er ikke
-          perfekte, og vi er ikke en zero waste-virksomhed. Men vi arbejder hver
-          dag på at tage bedre valg og skabe en mere ansvarlig måde at producere
-          og forbruge på.
+          Vi producerer ikke varer på forhånd. Det betyder, at vi undgår
+          overproduktion og unødvendigt spild. Når du køber en t-shirt hos os,
+          ligger selve t-shirten klar, men designet bliver først trykt, når din
+          ordre er lagt. Det samme gælder for alle vores produkter fra krus og
+          tasker til babytøj og bikinier. På den måde er hvert produkt skabt
+          specifikt til dig. Vi er ikke perfekte, og vi er ikke en zero
+          waste-virksomhed. Men vi arbejder hver dag på at tage bedre valg og
+          skabe en mere ansvarlig måde at producere og forbruge på.
         </Typography>
         <br />
         <Typography variant="h4">
