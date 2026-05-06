@@ -1,7 +1,6 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import Logo from "../logo/LogoLight";
 
 const posts = [
   {
@@ -29,9 +28,6 @@ const posts = [
 export default function InstagramGrid() {
   return (
     <>
-      <Box textAlign="center">
-        <Logo width={100} />
-      </Box>
       <Typography variant="h4" component="p">
         Følg os på Instagram 📸
       </Typography>
