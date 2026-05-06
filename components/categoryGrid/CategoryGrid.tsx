@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import CategoryCard from "../categoryCard/CategoryCard";
 import { CategoryGridContainer } from "./CategoryGrid.styles";
 
@@ -18,7 +19,13 @@ export default function CategoryGrid({
   return (
     <CategoryGridContainer>
       {categories.map((category) => (
-        <CategoryCard key={category.slug} category={category} />
+        <Link
+          key={category.slug}
+          href={`/shop/category/${category.slug}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <CategoryCard key={category.slug} category={category} />
+        </Link>
       ))}
     </CategoryGridContainer>
   );

@@ -25,7 +25,7 @@ export default function FooterMenu() {
                 <StyledLink href="/print-on-demand">Vores koncept</StyledLink>
               </li>
               <li>
-                <StyledLink href="/kontakt">Kontakt os</StyledLink>
+                <StyledLink href="/faq">FAQ</StyledLink>
               </li>
             </Box>
           </Box>
@@ -37,13 +37,13 @@ export default function FooterMenu() {
             </Typography>
             <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
               <li>
-                <StyledLink href="/faq">FAQ</StyledLink>
-              </li>
-              <li>
                 <StyledLink href="/shipping">Levering</StyledLink>
               </li>
               <li>
                 <StyledLink href="/returpolitik">Retur</StyledLink>
+              </li>
+              <li>
+                <StyledLink href="/kontakt">Kontakt os</StyledLink>
               </li>
             </Box>
           </Box>

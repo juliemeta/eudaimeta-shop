@@ -49,20 +49,19 @@ export default async function HomePage() {
       <StyledContainer>
         <CategoryGrid categories={featuredCategories} />
 
-        <Box>
-          <Typography variant="h2">Udvalgte produkter</Typography>
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h2">Aktuelt</Typography>
           <ProductGrid products={featuredProducts} />
         </Box>
 
-        <Typography variant="h3">Nyheder</Typography>
-        <ProductGrid products={newProducts} />
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h3">Nyt</Typography>
+          <ProductGrid products={newProducts} />
+        </Box>
 
         <Typography variant="h4">Hello from Homepage</Typography>
-
         <Typography variant="h5">Hello from Homepage</Typography>
-
         <Typography variant="h6">Hello from Homepage</Typography>
-
         <Typography variant="body1">Discover our products</Typography>
         <Typography variant="body2">Discover our products</Typography>
       </StyledContainer>
