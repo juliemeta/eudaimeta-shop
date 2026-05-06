@@ -13,7 +13,7 @@ import {
   SelectQuantityWrapper,
 } from "./page.styles";
 import { Box, Grid, Typography } from "@mui/material";
-import { StyledContainer } from "@/styles/Container";
+import { StyledContainer } from "@/styles/StyledContainer";
 
 export default function CartPage() {
   const { items, updateQty, removeFromCart } = useCartStore();

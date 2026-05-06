@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { StyledContainer } from "@/styles/Container";
+import { StyledContainer } from "@/styles/StyledContainer";
 import FrontPageHero from "@/components/frontPageHero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
 import { getCategories, getProducts } from "@/lib/woocommerce";
@@ -65,11 +65,6 @@ export default async function HomePage() {
 
         <Typography variant="body1">Discover our products</Typography>
         <Typography variant="body2">Discover our products</Typography>
-
-        <Box textAlign="center" sx={{ bgcolor: "background.section" }}>
-          <Logo />
-          <Typography variant="h1">Design med mening</Typography>
-        </Box>
       </StyledContainer>
     </>
   );

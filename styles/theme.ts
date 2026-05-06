@@ -74,6 +74,7 @@ export const theme = createTheme({
       lineHeight: 1.25,
       color: "#d18bff",
       textAlign: "center",
+      marginBottom: "15px",
     },
 
     h3: {
@@ -83,6 +84,7 @@ export const theme = createTheme({
       lineHeight: 1.3,
       color: "#6500a8",
       textAlign: "center",
+      marginBottom: "10px",
     },
 
     h4: {
@@ -92,6 +94,7 @@ export const theme = createTheme({
       lineHeight: 1.35,
       color: "#004b16",
       textAlign: "center",
+      marginBottom: "10px",
     },
 
     h5: {
@@ -101,6 +104,7 @@ export const theme = createTheme({
       lineHeight: 1.4,
       color: "#2370ff",
       textAlign: "center",
+      marginBottom: "10px",
     },
 
     h6: {
@@ -110,6 +114,7 @@ export const theme = createTheme({
       lineHeight: 1.4,
       color: "#020202",
       textAlign: "center",
+      marginBottom: "10px",
     },
 
     body1: {
@@ -122,6 +127,7 @@ export const theme = createTheme({
       fontSize: "0.875rem",
       fontWeight: 400,
       lineHeight: 1.6,
+      color: "#3b3b3bde",
     },
   },
 

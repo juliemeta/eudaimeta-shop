@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { getProducts, getTags } from "@/lib/woocommerce";
-import { StyledContainer } from "@/styles/Container";
+import { StyledContainer } from "@/styles/StyledContainer";
 import { Typography } from "@mui/material";
 import InfiniteProductGrid from "@/components/productGrid/InfiniteProductGrid";
 
