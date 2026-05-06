@@ -1,10 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
-import FrontPageHero from "@/components/frontPageHero/FrontPageHero";
+import FrontPageHero from "@/components/hero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
 import { getCategories, getProducts } from "@/lib/woocommerce";
 import ProductGrid from "@/components/productGrid/ProductGrid";
-import Logo from "@/components/logo/Logo";
 
 export default async function HomePage() {
   const categories = await getCategories();
