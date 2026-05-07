@@ -4,7 +4,7 @@ import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, List, ListItem, Typography } from "@mui/material";
 import Link from "next/link";
 
-export default function printOnDemand() {
+export default function PrintOnDemand() {
   return (
     <>
       <BannerSection

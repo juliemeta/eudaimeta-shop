@@ -40,7 +40,7 @@ export default function FooterMenu() {
                 <StyledLink href="/levering">Levering</StyledLink>
               </li>
               <li>
-                <StyledLink href="/returpolitik">Retur</StyledLink>
+                <StyledLink href="/retur">Retur</StyledLink>
               </li>
               <li>
                 <StyledLink href="/kontakt">Kontakt os</StyledLink>
