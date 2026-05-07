@@ -37,7 +37,7 @@ export default function FooterMenu() {
             </Typography>
             <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
               <li>
-                <StyledLink href="/shipping">Levering</StyledLink>
+                <StyledLink href="/levering">Levering</StyledLink>
               </li>
               <li>
                 <StyledLink href="/returpolitik">Retur</StyledLink>

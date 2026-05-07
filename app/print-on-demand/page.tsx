@@ -8,7 +8,7 @@ export default function printOnDemand() {
   return (
     <>
       <BannerSection
-        title={"Hvad er Print on demand?"}
+        title={"Hvad er Print on Demand?"}
         image="/assets/images/pod.png"
         overlay="#f2f0ecf5"
       />
