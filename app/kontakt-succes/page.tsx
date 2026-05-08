@@ -1,5 +1,4 @@
 import BannerSection from "@/components/banner/BannerSection";
-import ContactForm from "@/components/contactForm/ContactForm";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
@@ -14,13 +13,12 @@ export default function Retur() {
       />
       <StyledContainer>
         <StyledTextWrapper>
-          <Typography variant="h1">Skriv til os</Typography>
+          <Typography variant="h1">Tak for din henvendelse!</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <Typography sx={{ textAlign: "center" }}>
-              Vælg venligst hvad din henvendelse drejer sig om.
+              Vi har modtaget din besked. <br />
+              Du hører fra os snarest.
             </Typography>
-
-            <ContactForm />
           </Box>
         </StyledTextWrapper>
       </StyledContainer>
