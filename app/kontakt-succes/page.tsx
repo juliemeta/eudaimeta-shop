@@ -17,7 +17,7 @@ export default function Retur() {
           <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <Typography sx={{ textAlign: "center" }}>
               Vi har modtaget din besked. <br />
-              Du hører fra os snarest.
+              Du vil snart høre fra os.
             </Typography>
           </Box>
         </StyledTextWrapper>
