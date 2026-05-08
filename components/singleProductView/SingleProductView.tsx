@@ -18,9 +18,29 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledLink } from "../navbar/Navbar.styles";
+import Dialog from "@mui/material/Dialog";
 
 export function SingleProductView({ product }: any) {
-  const [selectedImage, setSelectedImage] = useState(product.images?.[0]?.src);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const selectedImage =
+    product.images?.[selectedIndex]?.src || placeholderImage;
+
+  const nextImage = () => {
+    if (!product.images?.length) return;
+
+    setSelectedIndex((prev) =>
+      prev === product.images.length - 1 ? 0 : prev + 1,
+    );
+  };
+
+  const prevImage = () => {
+    if (!product.images?.length) return;
+
+    setSelectedIndex((prev) =>
+      prev === 0 ? product.images.length - 1 : prev - 1,
+    );
+  };
   const [qty, setQty] = useState(1);
   const [tab, setTab] = useState(0);
 
@@ -82,13 +102,40 @@ export function SingleProductView({ product }: any) {
   // 🖼️ Change photo when choosing variation
   useEffect(() => {
     if (selectedVariation?.image?.src) {
-      setSelectedImage(selectedVariation.image.src);
+      const variationIndex = product.images?.findIndex(
+        (img: any) => img.src === selectedVariation.image.src,
+      );
+
+      if (variationIndex >= 0) {
+        setSelectedIndex(variationIndex);
+      }
     } else {
-      setSelectedImage(product.images?.[0]?.src);
+      setSelectedIndex(0);
     }
   }, [selectedVariation, product.images]);
 
-  // ✅ 🔥 Stock logic
+  // ◀ 🖼️ ▶ Lightbox keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+
+      if (e.key === "ArrowRight") {
+        nextImage();
+      }
+
+      if (e.key === "ArrowLeft") {
+        prevImage();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxOpen]);
+
+  // Stock logic
   const isInStock =
     product.type === "variable"
       ? selectedVariation
@@ -101,7 +148,15 @@ export function SingleProductView({ product }: any) {
       <Grid container spacing={4}>
         {/* LEFT: Images */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Box sx={{ position: "relative", width: "100%", height: 400 }}>
+          <Box
+            onClick={() => setLightboxOpen(true)}
+            sx={{
+              position: "relative",
+              width: "100%",
+              height: 400,
+              cursor: "pointer",
+            }}
+          >
             <Image
               src={selectedImage || placeholderImage}
               alt={product.name}
@@ -109,20 +164,72 @@ export function SingleProductView({ product }: any) {
               sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: "contain" }}
             />
+
+            {/* LEFT ARROW */}
+            <Box
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: 10,
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                bgcolor: "rgba(255, 255, 255, 0.38)",
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 1,
+                fontSize: 24,
+                userSelect: "none",
+              }}
+            >
+              ←
+            </Box>
+
+            {/* RIGHT ARROW */}
+            <Box
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                right: 10,
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                bgcolor: "rgba(255,255,255,0.38)",
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 1,
+                fontSize: 24,
+                userSelect: "none",
+              }}
+            >
+              →
+            </Box>
           </Box>
 
-          {/* Thumbnails */}
+          {/* THUMBNAILS */}
           <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
-            {product.images?.map((img: any) => (
+            {product.images?.map((img: any, index: number) => (
               <Box
                 key={img.id}
-                onClick={() => setSelectedImage(img.src)}
+                onClick={() => {
+                  setSelectedIndex(index);
+                }}
                 sx={{
                   width: 70,
                   height: 70,
-                  border: "1px solid #ddd",
+                  border:
+                    selectedIndex === index
+                      ? "2px solid black"
+                      : "1px solid #ddd",
                   cursor: "pointer",
                   position: "relative",
+                  overflow: "hidden",
                 }}
               >
                 <Image
@@ -341,6 +448,117 @@ export function SingleProductView({ product }: any) {
           {tab === 2 && <Typography>Ingen anmeldelser endnu</Typography>}
         </Box>
       </Box>
+      <Dialog
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        fullScreen
+        sx={{
+          "& .MuiDialog-paper": {
+            backgroundColor: "rgba(0,0,0,0.9)",
+          },
+        }}
+      >
+        {/* BACKDROP */}
+        <Box
+          onClick={() => setLightboxOpen(false)}
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          {/* CLOSE */}
+          <Box
+            onClick={() => setLightboxOpen(false)}
+            sx={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              color: "white",
+              fontSize: 40,
+              cursor: "pointer",
+              zIndex: 20,
+              userSelect: "none",
+            }}
+          >
+            ✕
+          </Box>
+
+          {/* IMAGE WRAPPER */}
+          <Box
+            onClick={(e) => e.stopPropagation()}
+            sx={{
+              position: "relative",
+              width: "90vw",
+              height: "90vh",
+              maxWidth: 1200,
+            }}
+          >
+            <Image
+              src={selectedImage}
+              alt={product.name}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "contain",
+              }}
+            />
+
+            {/* LEFT */}
+            <Box
+              onClick={prevImage}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: 16,
+                transform: "translateY(-50%)",
+                width: 48,
+                height: 48,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                bgcolor: "rgba(0,0,0,0.4)",
+                color: "white",
+                fontSize: 32,
+                cursor: "pointer",
+                userSelect: "none",
+                zIndex: 10,
+              }}
+            >
+              ←
+            </Box>
+
+            {/* RIGHT */}
+            <Box
+              onClick={nextImage}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                right: 16,
+                transform: "translateY(-50%)",
+                width: 48,
+                height: 48,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                bgcolor: "rgba(0,0,0,0.4)",
+                color: "white",
+                fontSize: 32,
+                cursor: "pointer",
+                userSelect: "none",
+                zIndex: 10,
+              }}
+            >
+              →
+            </Box>
+          </Box>
+        </Box>
+      </Dialog>
     </StyledContainer>
   );
 }
