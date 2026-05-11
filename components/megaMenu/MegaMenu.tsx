@@ -10,9 +10,7 @@ import {
   MobileMenuAccordionDetails,
   MobileMenuAccordion,
 } from "./MegaMenu.styles";
-
 import { NavLinkTypography, StyledLink } from "../navbar/Navbar.styles";
-
 import {
   Drawer,
   IconButton,
@@ -21,7 +19,6 @@ import {
   useMediaQuery,
   Box,
 } from "@mui/material";
-
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -106,9 +103,11 @@ export default function MegaMenu({ categories }: { categories: Category[] }) {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <NavLinkTypography>
-        <MenuIcon />
-      </NavLinkTypography>
+      <Typography
+        sx={{ fontWeight: "light", letterSpacing: 1, paddingLeft: 8 }}
+      >
+        UDFORSK SHOPPEN ↓
+      </Typography>
 
       {open && (
         <MegaMenuDropdown>

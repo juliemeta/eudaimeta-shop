@@ -1,10 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
-import FrontPageHero from "@/components/frontPageHero/FrontPageHero";
+import FrontPageHero from "@/components/hero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
 import { getCategories, getProducts } from "@/lib/woocommerce";
 import ProductGrid from "@/components/productGrid/ProductGrid";
-import Logo from "@/components/logo/Logo";
 
 export default async function HomePage() {
   const categories = await getCategories();
@@ -49,20 +48,19 @@ export default async function HomePage() {
       <StyledContainer>
         <CategoryGrid categories={featuredCategories} />
 
-        <Box>
-          <Typography variant="h2">Udvalgte produkter</Typography>
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h2">Aktuelt</Typography>
           <ProductGrid products={featuredProducts} />
         </Box>
 
-        <Typography variant="h3">Nyheder</Typography>
-        <ProductGrid products={newProducts} />
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h3">Nyt</Typography>
+          <ProductGrid products={newProducts} />
+        </Box>
 
         <Typography variant="h4">Hello from Homepage</Typography>
-
         <Typography variant="h5">Hello from Homepage</Typography>
-
         <Typography variant="h6">Hello from Homepage</Typography>
-
         <Typography variant="body1">Discover our products</Typography>
         <Typography variant="body2">Discover our products</Typography>
       </StyledContainer>

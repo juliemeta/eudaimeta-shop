@@ -1,6 +1,5 @@
 "use client";
 
-import { StyledLink } from "@/components/navbar/Navbar.styles";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
@@ -40,7 +39,7 @@ export default function Handelsbetingelser() {
           <Typography sx={{ mt: 2 }}>
             Bemærk: Ovenstående adresse er udelukkende til juridiske
             henvendelser. Returvarer modtages ikke her. Benyt venligst{" "}
-            <Link href="/kontakt">denne formular</Link> hvis du har brug for at
+            <Link href="/kontakt">denne formular</Link> hvis man har brug for at
             kontakte kundeservice.
           </Typography>
           <br />
@@ -48,31 +47,31 @@ export default function Handelsbetingelser() {
         <br />
         {/* Oversigt */}
         <Typography variant="h5" textAlign="left">
-          Oversigt (klik evt. på emne)
+          Oversigt
         </Typography>
         <Box>
-          <StyledLink href="#afgivelse">1. Afgivelse af ordrer</StyledLink>
+          <Link href="#afgivelse">1. Afgivelse af ordre</Link>
           <br />
-          <StyledLink href="#betaling">2. Betaling</StyledLink>
+          <Link href="#betaling">2. Betaling</Link>
           <br />
-          <StyledLink href="#levering">3. Levering</StyledLink>
+          <Link href="#levering">3. Levering</Link>
           <br />
-          <StyledLink href="#retur">4. Retur</StyledLink>
+          <Link href="#retur">4. Retur</Link>
           <br />
-          <StyledLink href="#missing-orders">5. Bortkomne ordrer</StyledLink>
+          <Link href="#missing-orders">5. Bortkomne ordrer</Link>
           <br />
-          <StyledLink href="#copyright">6. Ophavsret</StyledLink>
+          <Link href="#copyright">6. Ophavsret</Link>
           <br />
-          <StyledLink href="#databeskyttelse">7. Databeskyttelse</StyledLink>
+          <Link href="#databeskyttelse">7. Databeskyttelse</Link>
         </Box>
         <br />
-        <Box id="afgivelse" title="1. Afgivelse af ordrer">
+        <Box id="afgivelse" title="1. Afgivelse af ordre">
           <Typography variant="h3" textAlign="left">
-            1. Afgivelse af ordrer
+            1. Afgivelse af ordre
           </Typography>
           <Typography>
             En bindende aftale indgås først, når kunden modtager en
-            ordrebekræftelse.
+            ordrebekræftelse pr. mail.
           </Typography>
         </Box>
         <br />
@@ -85,8 +84,8 @@ export default function Handelsbetingelser() {
           </Typography>
           <Typography sx={{ mb: 2 }}>
             Vi accepterer Visa, MasterCard samt Apple Pay, Google Pay og
-            Microsoft Pay. Betaling trækkes ved bestilling, da produktet
-            fremstilles på bestilling (Print-on-Demand).
+            Microsoft Pay. Betaling trækkes umiddelbart efter købet, da
+            produktet fremstilles på bestilling (Print on Demand).
           </Typography>
         </Box>{" "}
         <br />
@@ -95,15 +94,17 @@ export default function Handelsbetingelser() {
             3. Levering
           </Typography>
           <Typography sx={{ mb: 2 }}>
-            Plakater afsendes separat. Du modtager tracking for hver pakke.
+            Nogle produkter afsendes separat. Man vil modtage tracking for hver
+            pakke.
           </Typography>
 
           <Typography variant="h4" textAlign="left">
             3.1 Gratis fragt
           </Typography>
           <Typography sx={{ mb: 2 }}>
-            Kampagner for gratis fragt kan forekomme. Beløbet beregnes efter
-            rabat.
+            Kampagner for gratis fragt kan forekomme. I tilfælde hvor gratis
+            fragt betinges af et minimumsordrebeløb, beregnes det samlede
+            ordrebeløb efter evt. rabat.
           </Typography>
 
           <Typography variant="h4" textAlign="left">
@@ -116,7 +117,8 @@ export default function Handelsbetingelser() {
             3.3 Leveringsadresse
           </Typography>
           <Typography>
-            Kunden er ansvarlig for korrekt adresse. Tracking sendes via e-mail.
+            Kunden er ansvarlig for korrekt angivelse af leveringsadresse.
+            Trackinginfo sendes via e-mail.
           </Typography>
         </Box>
         <br />
@@ -130,38 +132,37 @@ export default function Handelsbetingelser() {
           </Typography>
 
           <Typography variant="h4" textAlign="left">
-            4.2 Fortrydelsesret
+            4.1 Fortrydelsesret
           </Typography>
           <Typography sx={{ mb: 2 }}>
-            14 dages fortrydelsesret fra modtagelse.
+            Man har 14 dages fortrydelsesret fra modtagelsen af varen. Det vil
+            sige, at man har 14 dage til at meddele, at man fortryder købet.
+            Fristen starter den dag, man modtager varen (eller den sidste vare
+            ved delt levering). Derefter har man 14 dage til at sende varen
+            retur.
           </Typography>
 
           <Typography variant="h4" textAlign="left">
-            4.3 Returnering
+            4.2 Returnering
           </Typography>
           <Typography sx={{ mb: 2 }}>
             Varen skal returneres i samme stand. Kunden betaler returfragt.
           </Typography>
 
           <Typography variant="h4" textAlign="left">
-            4.4 Refusion
+            4.3 Refusion
           </Typography>
           <Typography sx={{ mb: 2 }}>
-            Refusion sker inden 14 dage efter godkendt retur.
-          </Typography>
-
-          <Typography variant="h4" textAlign="left">
-            4.5 Udvidet returret
-          </Typography>
-          <Typography sx={{ mb: 2 }}>
-            Vi tilbyder 1 års udvidet returret.
+            Refusion sker inden for 14 dage efter godkendt retur.
           </Typography>
 
           <Typography variant="h4" textAlign="left">
             4.6 Ombytning
           </Typography>
           <Typography sx={{ mb: 2 }}>
-            Ombytning er ikke muligt – lav en ny bestilling.
+            Det er ikke muligt at ombytte til en anden vare – vi anbefaler
+            derfor at benytte fortrydelsesretten jvf. pkt. 4.1 og derefter
+            foretage en ny bestilling.
           </Typography>
 
           <Typography variant="h4" textAlign="left">
@@ -177,7 +178,8 @@ export default function Handelsbetingelser() {
             5. Bortkomne forsendelser
           </Typography>
           <Typography>
-            Tjek din adresse og kontakt kundeservice med ordrenummer.
+            Tjek venligst den angivne leveringsadresse og kontakt herefter
+            kundeservice med ordrenummer.
           </Typography>
         </Box>
         <br />

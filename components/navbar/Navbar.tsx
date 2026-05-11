@@ -308,6 +308,9 @@ export default function Navbar({ categories }: any) {
 
         {/* RIGHT */}
         <RightSection>
+          <NavLinks>
+            <MegaMenu categories={categories} />
+          </NavLinks>
           <Link href="/cart">
             <CartButton>
               <CartBadge badgeContent={cartCount} showZero={false}>
@@ -315,9 +318,6 @@ export default function Navbar({ categories }: any) {
               </CartBadge>
             </CartButton>
           </Link>
-          <NavLinks>
-            <MegaMenu categories={categories} />
-          </NavLinks>
         </RightSection>
       </StyledToolbar>
     </StyledAppBar>
