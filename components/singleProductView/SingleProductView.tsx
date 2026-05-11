@@ -492,9 +492,15 @@ export function SingleProductView({ product }: any) {
             onClick={(e) => e.stopPropagation()}
             sx={{
               position: "relative",
-              width: "90vw",
-              height: "90vh",
               maxWidth: 1200,
+              width: {
+                xs: "95vw",
+                md: "90vw",
+              },
+              height: {
+                xs: "80vh",
+                md: "90vh",
+              },
             }}
           >
             <Image

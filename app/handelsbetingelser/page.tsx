@@ -1,6 +1,5 @@
 "use client";
 
-import { StyledLink } from "@/components/navbar/Navbar.styles";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
