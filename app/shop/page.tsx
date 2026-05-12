@@ -1,3 +1,4 @@
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
 import ProductsView from "@/components/productsView/ProductsView";
 import { getProducts } from "@/lib/woocommerce";
 
@@ -8,5 +9,20 @@ export default async function Page({ searchParams }: any) {
 
   const products = await getProducts(undefined, undefined, undefined, sort);
 
-  return <ProductsView products={products} />;
+  return (
+    <>
+      <DynamicBreadcrumbs
+        items={[
+          {
+            label: "Forside",
+            href: "/",
+          },
+          {
+            label: "Shop",
+          },
+        ]}
+      />
+      <ProductsView products={products} />
+    </>
+  );
 }

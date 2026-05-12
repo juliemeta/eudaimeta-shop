@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
 import InfiniteProductGrid from "@/components/productGrid/InfiniteProductGrid";
 import { getProducts, getCategories } from "@/lib/woocommerce";
 import { StyledContainer } from "@/styles/StyledContainer";
@@ -13,10 +14,35 @@ export default async function CategoryPage(props: any) {
 
   const currentCategory = categories.find((c: any) => c.slug === slug);
 
+  const parentCategory = categories.find(
+    (c: any) => c.id === currentCategory?.parent,
+  );
+
   const products = await getProducts(currentCategory?.id);
 
   return (
     <StyledContainer>
+      <DynamicBreadcrumbs
+        items={[
+          {
+            label: "Shop",
+            href: "/shop",
+          },
+
+          ...(parentCategory
+            ? [
+                {
+                  label: parentCategory.name,
+                  href: `/shop/category/${parentCategory.slug}`,
+                },
+              ]
+            : []),
+
+          {
+            label: currentCategory?.name || slug,
+          },
+        ]}
+      />
       <Typography variant="h1">{currentCategory?.name || slug}</Typography>
 
       <InfiniteProductGrid

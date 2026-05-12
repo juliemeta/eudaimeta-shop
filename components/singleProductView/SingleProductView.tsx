@@ -6,8 +6,8 @@ import {
   Typography,
   Button,
   IconButton,
-  Tabs,
-  Tab,
+  AccordionSummary,
+  AccordionDetails,
   TextField,
   Divider,
 } from "@mui/material";
@@ -19,6 +19,9 @@ import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledLink } from "../navbar/Navbar.styles";
 import Dialog from "@mui/material/Dialog";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ProductAccordion, StyledAccordion } from "./SingleProductView.styles";
+import { DynamicBreadcrumbs } from "../breadcrumbs/dynamicBreadcrumbs";
 
 export function SingleProductView({ product }: any) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -42,12 +45,12 @@ export function SingleProductView({ product }: any) {
     );
   };
   const [qty, setQty] = useState(1);
-  const [tab, setTab] = useState(0);
 
   const [variations, setVariations] = useState<any[]>([]);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedVariation, setSelectedVariation] = useState<any>(null);
   const [sizeError, setSizeError] = useState(false);
+  const [reviews, setReviews] = useState<any[]>([]);
 
   const addToCart = useCartStore((state) => state.addToCart);
   const category = product.categories?.[0];
@@ -82,6 +85,17 @@ export function SingleProductView({ product }: any) {
       })
       .catch(console.error);
   }, [product.id, product.type]);
+
+  // ⭐ Fetch reviews
+  useEffect(() => {
+    fetch(`/api/reviews?productId=${product.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("REVIEWS:", data);
+        setReviews(data);
+      })
+      .catch(console.error);
+  }, [product.id]);
 
   // 🎯 Match selected size → variation
   useEffect(() => {
@@ -145,6 +159,23 @@ export function SingleProductView({ product }: any) {
 
   return (
     <StyledContainer>
+      <DynamicBreadcrumbs
+        items={[
+          {
+            label: "Shop",
+            href: "/shop",
+          },
+
+          ...(product.categories || []).map((cat: any) => ({
+            label: cat.name,
+            href: `/shop/category/${cat.slug}`,
+          })),
+
+          {
+            label: product.name,
+          },
+        ]}
+      />
       <Grid container spacing={4}>
         {/* LEFT: Images */}
         <Grid size={{ xs: 12, md: 6 }}>
@@ -192,7 +223,7 @@ export function SingleProductView({ product }: any) {
             <Box
               onClick={(e) => {
                 e.stopPropagation();
-                prevImage();
+                nextImage();
               }}
               sx={{
                 position: "absolute",
@@ -422,32 +453,125 @@ export function SingleProductView({ product }: any) {
         </Grid>
       </Grid>
 
-      {/* Tabs */}
       <Box sx={{ mt: 5 }}>
-        <Tabs value={tab} onChange={(_, v) => setTab(v)}>
-          <Tab label="Beskrivelse" />
-          <Tab label="Yderligere information" />
-          <Tab label="Anmeldelser" />
-        </Tabs>
+        {/* BESKRIVELSE */}
+        <ProductAccordion defaultExpanded>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography sx={{ fontWeight: 600 }}>BESKRIVELSE</Typography>
+          </AccordionSummary>
 
-        <Box sx={{ mt: 2 }}>
-          {tab === 0 && (
+          <AccordionDetails>
             <div
               dangerouslySetInnerHTML={{
                 __html: product.description,
               }}
             />
-          )}
+          </AccordionDetails>
+        </ProductAccordion>
 
-          {tab === 1 && (
-            <Typography>
-              (Insert here: Mapping of WooCommerce attributes)
+        {/* PRODUKTINFORMATION */}
+        <ProductAccordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography sx={{ fontWeight: 600 }}>PRODUKTINFORMATION</Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: product.acf?.product_info || "Ingen produktinfo endnu.",
+              }}
+            />
+          </AccordionDetails>
+        </ProductAccordion>
+
+        {/* STØRRELSESGUIDE */}
+        <ProductAccordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography sx={{ fontWeight: 600 }}>STØRRELSESGUIDE</Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <div
+              dangerouslySetInnerHTML={{
+                __html:
+                  product.acf?.size_guide || "Ingen størrelsesguide endnu.",
+              }}
+            />
+          </AccordionDetails>
+        </ProductAccordion>
+
+        {/* PRODUKTSIKKERHED */}
+        <ProductAccordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography sx={{ fontWeight: 600 }}>PRODUKTSIKKERHED</Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <div
+              dangerouslySetInnerHTML={{
+                __html:
+                  product.acf?.compliance_info ||
+                  "Ingen relevant info om produktsikkerhed.",
+              }}
+            />
+          </AccordionDetails>
+        </ProductAccordion>
+
+        {/* ANMELDELSER */}
+        <ProductAccordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography sx={{ fontWeight: 600 }}>
+              ANMELDELSER ({reviews.length})
             </Typography>
-          )}
+          </AccordionSummary>
 
-          {tab === 2 && <Typography>Ingen anmeldelser endnu</Typography>}
-        </Box>
+          <AccordionDetails>
+            {reviews.length > 0 ? (
+              reviews.map((review: any) => (
+                <Box
+                  key={review.id}
+                  sx={{
+                    mb: 4,
+                    pb: 3,
+                    borderBottom: "1px solid #eee",
+                  }}
+                >
+                  {/* Navn */}
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      mb: 0.5,
+                    }}
+                  >
+                    {review.reviewer}
+                  </Typography>
+
+                  {/* Rating */}
+                  <Typography
+                    sx={{
+                      fontSize: 14,
+                      color: "text.secondary",
+                      mb: 1,
+                    }}
+                  >
+                    {"★".repeat(review.rating)}
+                  </Typography>
+
+                  {/* Review text */}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: review.review,
+                    }}
+                  />
+                </Box>
+              ))
+            ) : (
+              <Typography>Ingen anmeldelser endnu.</Typography>
+            )}
+          </AccordionDetails>
+        </ProductAccordion>
       </Box>
+
       <Dialog
         open={lightboxOpen}
         onClose={() => setLightboxOpen(false)}

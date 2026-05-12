@@ -13,11 +13,11 @@ export const theme = createTheme({
 
   palette: {
     background: {
-      default: "#fffefb",
-      paper: "#fbfdfd",
+      default: "#ffffff",
+      paper: "#ffffff",
       subtle: "#f2edec",
       section: "#fcf5eb",
-      elevated: "#ffffff",
+      elevated: "#fffefb",
       navbar: "#ffffffe5",
       footer: "#ece9e4",
     },
