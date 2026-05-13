@@ -22,6 +22,10 @@ import Dialog from "@mui/material/Dialog";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ProductAccordion, StyledAccordion } from "./SingleProductView.styles";
 import { DynamicBreadcrumbs } from "../breadcrumbs/dynamicBreadcrumbs";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import { useWishlistStore } from "@/lib/store/wishlistStore";
 
 export function SingleProductView({ product }: any) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -53,6 +57,15 @@ export function SingleProductView({ product }: any) {
   const [reviews, setReviews] = useState<any[]>([]);
 
   const addToCart = useCartStore((state) => state.addToCart);
+  const addToWishlist = useWishlistStore((state) => state.addToWishlist);
+
+  const removeFromWishlist = useWishlistStore(
+    (state) => state.removeFromWishlist,
+  );
+
+  const isInWishlist = useWishlistStore((state) =>
+    state.isInWishlist(product.id),
+  );
   const category = product.categories?.[0];
 
   // 📦 Sizes from variations
@@ -178,13 +191,13 @@ export function SingleProductView({ product }: any) {
       />
       <Grid container spacing={4}>
         {/* LEFT: Images */}
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Box
             onClick={() => setLightboxOpen(true)}
             sx={{
               position: "relative",
               width: "100%",
-              height: 400,
+              height: { xs: 400, md: 700 },
               cursor: "pointer",
             }}
           >
@@ -276,7 +289,7 @@ export function SingleProductView({ product }: any) {
         </Grid>
 
         {/* RIGHT: Info */}
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Typography variant="h5" gutterBottom>
             {product.name}
           </Typography>
@@ -362,7 +375,7 @@ export function SingleProductView({ product }: any) {
                     borderRadius: 1,
                   }}
                 >
-                  Vælg mellem de tilgængelige størrelsesmuligheder
+                  Vælg en tilgængelig størrelse
                 </Typography>
               )}
             </Box>
@@ -388,53 +401,83 @@ export function SingleProductView({ product }: any) {
               +
             </IconButton>
           </Box>
-          {/* 🛒 Add to cart */}
-          <Button
-            variant="contained"
-            sx={{
-              mt: 2,
-              backgroundColor: "#c7a4d8",
-              "&:hover": { backgroundColor: "#b38cc9" },
-            }}
-            fullWidth
-            disabled={product.type === "simple" && !isInStock}
-            onClick={() => {
-              // ❌ Variant missing
-              if (product.type === "variable" && !selectedVariation) {
-                setSizeError(true);
-                return;
-              }
 
-              // ❌ Chosen variant out of stock
-              if (
-                product.type === "variable" &&
-                selectedVariation?.stock_status !== "instock"
-              ) {
-                return;
-              }
+          <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+            {/* 🛒 Add to cart */}
+            <Button
+              variant="contained"
+              sx={{
+                flex: 1,
+                backgroundColor: "#c7a4d8",
+                "&:hover": { backgroundColor: "#b38cc9" },
+              }}
+              disabled={product.type === "simple" && !isInStock}
+              onClick={() => {
+                // ❌ Variant missing
+                if (product.type === "variable" && !selectedVariation) {
+                  setSizeError(true);
+                  return;
+                }
 
-              // ❌ Simple product out of stock
-              if (product.type === "simple" && !isInStock) {
-                return;
-              }
+                // ❌ Chosen variant out of stock
+                if (
+                  product.type === "variable" &&
+                  selectedVariation?.stock_status !== "instock"
+                ) {
+                  return;
+                }
 
-              // ✅ Reset error
-              setSizeError(false);
+                // ❌ Simple product out of stock
+                if (product.type === "simple" && !isInStock) {
+                  return;
+                }
 
-              addToCart({
-                id: product.id,
-                variation_id: selectedVariation?.id,
-                name: product.name,
-                price: selectedVariation?.price || product.price,
-                image: product.images?.[0]?.src,
-                quantity: qty,
-                slug: product.slug,
-                size: selectedSize,
-              });
-            }}
-          >
-            Tilføj til kurv
-          </Button>
+                // ✅ Reset error
+                setSizeError(false);
+
+                addToCart({
+                  id: product.id,
+                  variation_id: selectedVariation?.id,
+                  name: product.name,
+                  price: selectedVariation?.price || product.price,
+                  image: product.images?.[0]?.src,
+                  quantity: qty,
+                  slug: product.slug,
+                  size: selectedSize,
+                });
+              }}
+            >
+              Læg i kurv
+            </Button>
+
+            {/* 💖 Add to wishlist */}
+            <IconButton
+              onClick={() => {
+                if (isInWishlist) {
+                  removeFromWishlist(product.id);
+                } else {
+                  addToWishlist({
+                    id: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    images: product.images,
+                    price: product.price,
+
+                    type: product.type as "simple" | "variable",
+
+                    sizes,
+                  });
+                }
+              }}
+            >
+              {isInWishlist ? (
+                <FavoriteIcon sx={{ color: "#d16b86" }} />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
+            </IconButton>
+          </Box>
+
           {/* Category display */}
           <Divider sx={{ my: 3 }} />
           {product.categories?.length > 0 && (

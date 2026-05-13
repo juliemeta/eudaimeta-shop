@@ -5,53 +5,83 @@ import { Box } from "@mui/material";
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   height: "100%",
+
   display: "flex",
   flexDirection: "column",
-  cursor: "pointer",
+
   overflow: "hidden",
+
   boxShadow: "none",
-  border: `2px solid ${theme.palette.background.paper}`,
+
+  borderRadius: 0,
+
+  backgroundColor: "transparent",
+
+  border: "none",
 
   "@media (hover: hover)": {
     "&:hover .hoverImage": {
       opacity: 1,
     },
 
-    "&:hover .wishlistButton": {
-      opacity: 1,
-      transform: "scale(1.04)",
+    "&:hover .removeButton": {
+      transform: "scale(1.05)",
     },
   },
 }));
 
 export const ImageWrapper = styled(Box)({
   position: "relative",
+
   width: "100%",
+
   aspectRatio: "1 / 1",
+
   overflow: "hidden",
+
+  backgroundColor: "#f7f7f7",
 });
 
 export const BaseImage = styled("img")({
-  maxWidth: "100%",
+  width: "100%",
   height: "100%",
+
   objectFit: "cover",
+
   display: "block",
 });
 
 export const HoverImage = styled("img")({
   position: "absolute",
+
   top: 0,
   left: 0,
+
   width: "100%",
   height: "100%",
+
   objectFit: "cover",
+
   opacity: 0,
-  transition: "opacity 0.1s ease",
+
+  transition: "opacity 0.18s ease",
 });
 
 export const StyledCardContent = styled(CardContent)(({ theme }) => ({
   flexGrow: 1,
+
   display: "flex",
   flexDirection: "column",
-  gap: theme.spacing(1),
+
+  padding: theme.spacing(2, 0, 0),
+
+  "&:last-child": {
+    paddingBottom: 0,
+  },
+
+  "& .MuiTypography-h6": {
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: 1.4,
+  },
 }));
