@@ -10,9 +10,10 @@ import {
   CenterSection,
   LeftSection,
   RightSection,
-  CartButton,
   CartBadge,
+  NavbarIconButton,
 } from "./Navbar.styles";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Image from "next/image";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import MegaMenu from "../megaMenu/MegaMenu";
@@ -311,12 +312,19 @@ export default function Navbar({ categories }: any) {
           <NavLinks>
             <MegaMenu categories={categories} />
           </NavLinks>
+
+          <Link href="/favoritter">
+            <NavbarIconButton>
+              <FavoriteIcon />
+            </NavbarIconButton>
+          </Link>
+
           <Link href="/cart">
-            <CartButton>
+            <NavbarIconButton>
               <CartBadge badgeContent={cartCount} showZero={false}>
                 <ShoppingBagIcon />
               </CartBadge>
-            </CartButton>
+            </NavbarIconButton>
           </Link>
         </RightSection>
       </StyledToolbar>

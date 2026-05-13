@@ -62,7 +62,7 @@ export const NavLinkTypography = styled(Typography)({
   },
 });
 
-export const CartButton = styled(IconButton)(({ theme }) => ({
+export const NavbarIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
   "&:hover": {
     transform: "scale(1.1)",
