@@ -3,6 +3,7 @@
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Placeholder from "../../public/assets/images/placeholder.png";
+import { useState } from "react";
 
 import {
   BaseImage,
@@ -31,6 +32,8 @@ type Product = {
   slug: string;
   price: string;
   images: { src: string }[];
+  type: "simple" | "variable";
+  sizes?: string[];
 };
 
 export default function WishlistCard({ product }: { product: Product }) {
@@ -39,8 +42,9 @@ export default function WishlistCard({ product }: { product: Product }) {
   );
 
   const firstImage = product.images?.[0]?.src || Placeholder.src;
-
   const secondImage = product.images?.[1]?.src;
+  const isSimpleProduct = product.type === "simple";
+  const [selectedSize, setSelectedSize] = useState("");
 
   return (
     <StyledCard>
@@ -110,6 +114,13 @@ export default function WishlistCard({ product }: { product: Product }) {
             variant="h6"
             sx={{
               mb: 1,
+
+              minHeight: {
+                xs: 56,
+                md: 64,
+              },
+
+              lineHeight: 1.4,
             }}
           >
             {product.name}
@@ -121,20 +132,10 @@ export default function WishlistCard({ product }: { product: Product }) {
           sx={{
             fontWeight: 600,
             mb: 2,
+            fontSize: 15,
           }}
         >
           {Number(product.price).toLocaleString("da-DK")} kr.
-        </Typography>
-
-        {/* COLOR PLACEHOLDER */}
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            mb: 2,
-          }}
-        >
-          Farve kommer senere
         </Typography>
 
         {/* SIZE SELECTOR */}
@@ -145,20 +146,40 @@ export default function WishlistCard({ product }: { product: Product }) {
             mb: 2,
           }}
         >
-          <Select defaultValue="" displayEmpty>
-            <MenuItem value="">Vælg størrelse</MenuItem>
+          <Select
+            disabled={isSimpleProduct}
+            value={isSimpleProduct ? "one-size" : selectedSize}
+            displayEmpty
+            onChange={(e) => setSelectedSize(e.target.value)}
+            renderValue={(selected) => {
+              if (isSimpleProduct) {
+                return "One Size";
+              }
 
-            <MenuItem value="XS">XS</MenuItem>
-            <MenuItem value="S">S</MenuItem>
-            <MenuItem value="M">M</MenuItem>
-            <MenuItem value="L">L</MenuItem>
+              if (!selected) {
+                return "Vælg en størrelse";
+              }
+
+              return selected;
+            }}
+          >
+            {isSimpleProduct ? (
+              <MenuItem value="one-size">One Size</MenuItem>
+            ) : (
+              product.sizes?.map((size) => (
+                <MenuItem key={size} value={size}>
+                  {size}
+                </MenuItem>
+              ))
+            )}
           </Select>
         </FormControl>
 
         {/* ADD TO CART */}
         <Button
-          variant="outlined"
+          variant="contained"
           fullWidth
+          disabled={!isSimpleProduct && !selectedSize}
           sx={{
             py: 1.2,
           }}

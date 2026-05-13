@@ -8,7 +8,12 @@ type Product = {
   name: string;
   slug: string;
   price: string;
+
+  type: "simple" | "variable";
+
   images: { src: string }[];
+
+  sizes?: string[];
 };
 
 export default function WishlistGrid({ products }: { products: Product[] }) {

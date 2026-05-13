@@ -27,7 +27,15 @@ type Product = {
   name: string;
   slug: string;
   price: string;
+
+  type: string;
+
   images: { src: string }[];
+
+  attributes?: {
+    name: string;
+    options: string[];
+  }[];
 };
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -44,8 +52,10 @@ export default function ProductCard({ product }: { product: Product }) {
   );
 
   const firstImage = product.images?.[0]?.src || Placeholder.src;
-
   const secondImage = product.images?.[1]?.src;
+  const sizes =
+    product.attributes?.find((attr: any) => attr.name === "Størrelse")
+      ?.options || [];
 
   return (
     <>
@@ -77,6 +87,8 @@ export default function ProductCard({ product }: { product: Product }) {
                     slug: product.slug,
                     images: product.images,
                     price: product.price,
+                    type: product.type as "simple" | "variable",
+                    sizes,
                   });
 
                   setToastOpen(true);
@@ -138,7 +150,21 @@ export default function ProductCard({ product }: { product: Product }) {
           </ImageWrapper>
 
           <StyledCardContent>
-            <Typography variant="h6">{product.name}</Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                mb: 1,
+
+                minHeight: {
+                  xs: 56,
+                  md: 64,
+                },
+
+                lineHeight: 1.4,
+              }}
+            >
+              {product.name}
+            </Typography>
 
             <Typography color="text.secondary">
               {Number(product.price).toLocaleString("da-DK")} kr.

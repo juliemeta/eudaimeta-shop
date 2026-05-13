@@ -7,6 +7,8 @@ interface WishlistItem {
   slug: string;
   images: { src: string }[];
   price: string;
+  type: "simple" | "variable";
+  sizes?: string[];
 }
 
 interface WishlistStore {

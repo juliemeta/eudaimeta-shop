@@ -462,6 +462,10 @@ export function SingleProductView({ product }: any) {
                     slug: product.slug,
                     images: product.images,
                     price: product.price,
+
+                    type: product.type as "simple" | "variable",
+
+                    sizes,
                   });
                 }
               }}
