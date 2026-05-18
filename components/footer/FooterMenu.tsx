@@ -22,7 +22,7 @@ export default function FooterMenu() {
                 <StyledLink href="/about">Om os</StyledLink>
               </li>
               <li>
-                <StyledLink href="/print-on-demand">Vores koncept</StyledLink>
+                <StyledLink href="/print-on-demand">Konceptet</StyledLink>
               </li>
               <li>
                 <StyledLink href="/faq">FAQ</StyledLink>
@@ -51,7 +51,7 @@ export default function FooterMenu() {
           {/* COLUMN 3 */}
           <Box>
             <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: "bold" }}>
-              Inspiration
+              Vores univers
             </Typography>
             <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
               <li>
@@ -63,7 +63,7 @@ export default function FooterMenu() {
                 </StyledLink>
               </li>
               <li>
-                <StyledLink href="/blog">Blog</StyledLink>
+                <StyledLink href="/cogito">Cogito meta sum</StyledLink>
               </li>
               <li>
                 <StyledLink href="/shop">Shop</StyledLink>
