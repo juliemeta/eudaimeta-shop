@@ -3,6 +3,19 @@ import ContactForm from "@/components/contactForm/ContactForm";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
+import { Metadata } from "next";
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
+
+// 🎯 SEO
+const pageTitle = "Kontakt os";
+
+const pageDescription =
+  "Benyt venligst kontaktformularen på vores hjemmeside hvis du f.eks. har spørgsmål til din ordre eller ønsker at oprette en retur";
+
+export const metadata: Metadata = {
+  title: `${pageTitle} | Eudaimeta`,
+  description: pageDescription,
+};
 
 export default function Retur() {
   return (

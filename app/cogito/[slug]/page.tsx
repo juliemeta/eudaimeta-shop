@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
@@ -16,11 +17,34 @@ async function getPost(slug: string) {
   return posts[0];
 }
 
-export default async function PostPage({
-  params,
-}: {
+type Props = {
   params: Promise<{ slug: string }>;
-}) {
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const post = await getPost(slug);
+
+  if (!post) {
+    return {
+      title: "Cogito | Eudaimeta",
+    };
+  }
+
+  const cleanExcerpt =
+    post.excerpt?.rendered?.replace(/<[^>]*>/g, "")?.trim() || "";
+
+  return {
+    title: `${post.title.rendered} | Cogito | Eudaimeta`,
+
+    description:
+      cleanExcerpt ||
+      "Tanker, refleksioner og inspiration samlet i Cogito Meta Sum.",
+  };
+}
+
+export default async function PostPage({ params }: Props) {
   const { slug } = await params;
 
   const post = await getPost(slug);
@@ -28,8 +52,9 @@ export default async function PostPage({
   if (!post) {
     return (
       <Box>
-        Ups! Tankerne er forsvundet. <br />
-        <Button href="/cogito-meta-sum" variant="contained">
+        Ups! Tankerne er forsvundet.
+        <br />
+        <Button href="/cogito" variant="contained">
           ↩ Gå tilbage
         </Button>
       </Box>
@@ -57,7 +82,7 @@ export default async function PostPage({
             },
 
             {
-              label: "Cogito meta sum",
+              label: "Cogito Meta Sum",
               href: "/cogito",
             },
 
@@ -66,6 +91,7 @@ export default async function PostPage({
             },
           ]}
         />
+
         <Typography variant="h1">{post.title.rendered}</Typography>
 
         <Box
@@ -150,7 +176,7 @@ export default async function PostPage({
 
         <br />
 
-        <Button variant="outlined" href="/cogito-meta-sum">
+        <Button variant="outlined" href="/cogito">
           ↩ Tilbage til oversigt
         </Button>
       </StyledTextWrapper>

@@ -17,7 +17,7 @@ import { Metadata } from "next";
 const pageTitle = "FAQ";
 
 const pageDescription =
-  "Her finder du svar på de mest almindelige spørgsmål om levering, returnering og vores Print on Demand-koncept.";
+  "Her finder du svar på de mest almindelige spørgsmål omkring levering, returnering og vores Print on Demand-koncept.";
 
 export const metadata: Metadata = {
   title: `${pageTitle} | Eudaimeta`,

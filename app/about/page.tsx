@@ -10,7 +10,7 @@ import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs"
 const pageTitle = "Om os";
 
 const pageDescription =
-  "Vi producerer ikke varer på forhånd. Det betyder, at vi undgår overproduktion og unødvendigt spild. På den måde er hvert produkt skabt specifikt til dig - mindre forbrug, mere omtanke. 💚";
+  "Eudaimeta blev skabt ud fra et ønske om at kombinere æstetik, funktion og mere miljøbevidste og bæredygtige valg i hverdagen.";
 
 export const metadata: Metadata = {
   title: `${pageTitle} | Eudaimeta`,

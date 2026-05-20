@@ -14,6 +14,11 @@ const pageDescription =
 export const metadata: Metadata = {
   title: `${pageTitle} | Eudaimeta`,
   description: pageDescription,
+
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function CookiesOgPersondata() {

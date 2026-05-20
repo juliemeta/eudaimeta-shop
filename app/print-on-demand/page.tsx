@@ -3,6 +3,19 @@ import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, List, ListItem, Typography } from "@mui/material";
 import Link from "next/link";
+import { Metadata } from "next";
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
+
+// 🎯 SEO
+const pageTitle = "Vores koncept";
+
+const pageDescription =
+  "POD = Print on Demand: Vi producerer ikke varer på forhånd. På den måde undgår vi overproduktion og samtidig er hvert produkt skabt specifikt til dig. 💚";
+
+export const metadata: Metadata = {
+  title: `${pageTitle} | Eudaimeta`,
+  description: pageDescription,
+};
 
 export default function PrintOnDemand() {
   return (
@@ -14,7 +27,15 @@ export default function PrintOnDemand() {
       />
       <StyledContainer>
         <StyledTextWrapper>
-          <Typography variant="h1">Vores koncept</Typography>
+          <DynamicBreadcrumbs
+            items={[
+              { label: "Forside", href: "/" },
+              {
+                label: pageTitle,
+              },
+            ]}
+          />
+          <Typography variant="h1">{pageTitle}</Typography>
           <Typography variant="h2">Problemet med overproduktion</Typography>
           <Typography>
             Overproduktion er et af de største problemer i modeindustrien – især
@@ -32,8 +53,8 @@ export default function PrintOnDemand() {
           <Typography variant="h2">En smartere måde at producere på</Typography>
           <Typography>
             Flere virksomheder begynder heldigvis at tage ansvar og gentænke
-            deres produktion. Hos os har vi valgt en anden tilgang: Print On
-            Demand (POD). Det betyder helt enkelt, at et produkt først bliver
+            deres produktion. Hos os har vi valgt en alternativ tilgang: Print
+            On Demand (POD). Det betyder helt enkelt, at et produkt først bliver
             færdigproduceret, når kunden køber det. I stedet for at producere
             store mængder på forhånd, producerer vi kun det, der rent faktisk er
             efterspørgsel på. Vi samarbejder med en POD-leverandør med
