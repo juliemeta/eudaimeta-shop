@@ -1,8 +1,21 @@
 import BannerSection from "@/components/banner/BannerSection";
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import { Metadata } from "next";
+
+// 🎯 SEO
+const pageTitle = "Cogito Meta Sum";
+
+const pageDescription =
+  "Tanker, refleksioner og inspiration samlet i Cogito Meta Sum.";
+
+export const metadata: Metadata = {
+  title: `${pageTitle} | Eudaimeta`,
+  description: pageDescription,
+};
 
 async function getPosts() {
   const res = await fetch("https://eudaimeta.dk/wp-json/wp/v2/posts", {
@@ -18,15 +31,23 @@ export default async function CogitoPage() {
   return (
     <>
       <BannerSection
-        title="Cogito meta sum"
+        title={pageTitle}
         image="/assets/images/cogito-meta-sum.png"
         overlay="#f2f0ecf5"
       />
       <StyledContainer>
         <StyledTextWrapper>
+          <DynamicBreadcrumbs
+            items={[
+              { label: "Forside", href: "/" },
+              {
+                label: pageTitle,
+              },
+            ]}
+          />
           {posts.map((post: any) => (
             <article key={post.id} style={{ marginBottom: "4rem" }}>
-              <Link href={`/cogito-meta-sum/${post.slug}`}>
+              <Link href={`/cogito/${post.slug}`}>
                 <h2
                   style={{
                     fontSize: "2rem",

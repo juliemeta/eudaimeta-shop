@@ -4,6 +4,18 @@ import FrontPageHero from "@/components/hero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
 import { getCategories, getProducts } from "@/lib/woocommerce";
 import ProductGrid from "@/components/productGrid/ProductGrid";
+import { Metadata } from "next";
+
+// 🎯 SEO
+const pageTitle = "Tilbehør til en mere bevidst hverdag";
+
+const pageDescription =
+  "Bæredygtigt produceret tilbehør og små ting til hverdagen — skabt med fokus på kvalitet, æstetik og lang levetid.";
+
+export const metadata: Metadata = {
+  title: `Eudaimeta | ${pageTitle}`,
+  description: pageDescription,
+};
 
 export default async function HomePage() {
   const categories = await getCategories();
@@ -11,7 +23,7 @@ export default async function HomePage() {
     "hatte",
     "baeltetasker",
     "baby-barn",
-    "home-living",
+    "hjem-hverdag",
   ];
 
   const featuredCategories = categories

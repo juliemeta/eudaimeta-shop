@@ -3,6 +3,24 @@ import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
 import Link from "next/link";
+import { Metadata } from "next";
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
+
+// 🎯 SEO
+const pageTitle = "Retur";
+
+const pageDescription =
+  "Hvis du ønsker at sende en vare retur, bliver du her guidet igennem processen i tre korte trin.";
+
+export const metadata: Metadata = {
+  title: `${pageTitle} | Eudaimeta`,
+  description: pageDescription,
+
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function Retur() {
   return (
@@ -14,6 +32,14 @@ export default function Retur() {
       />
       <StyledContainer>
         <StyledTextWrapper>
+          <DynamicBreadcrumbs
+            items={[
+              { label: "Forside", href: "/" },
+              {
+                label: pageTitle,
+              },
+            ]}
+          />
           <Typography variant="h1">Retur</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <Typography sx={{ textAlign: "center" }}>

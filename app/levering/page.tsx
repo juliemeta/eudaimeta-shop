@@ -3,6 +3,24 @@ import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
 import Link from "next/link";
+import { Metadata } from "next";
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
+
+// 🎯 SEO
+const pageTitle = "Levering";
+
+const pageDescription =
+  "Fragt koster altid 29 kr.💸 Vores Print on Demand-koncept betyder, at du kan regne med at modtage din pakke inden for typisk 4-10 hverdage. 📦🏃‍♀️";
+
+export const metadata: Metadata = {
+  title: `${pageTitle} | Eudaimeta`,
+  description: pageDescription,
+
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function Levering() {
   return (
@@ -14,6 +32,14 @@ export default function Levering() {
       />
       <StyledContainer>
         <StyledTextWrapper>
+          <DynamicBreadcrumbs
+            items={[
+              { label: "Forside", href: "/" },
+              {
+                label: pageTitle,
+              },
+            ]}
+          />
           <Typography variant="h1">Levering</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <Box>

@@ -1,15 +1,41 @@
-"use client";
-
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Typography } from "@mui/material";
 import Link from "next/link";
+import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
+import { Metadata } from "next";
+
+// 🎯 SEO
+const pageTitle = "Handelsbetingelser";
+
+const pageDescription = "Eudaimetas handelsbetingelser.";
+
+export const metadata: Metadata = {
+  title: `${pageTitle} | Eudaimeta`,
+  description: pageDescription,
+
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function Handelsbetingelser() {
   return (
     <StyledContainer>
       <StyledTextWrapper>
-        <Typography variant="h1">Handelsbetingelser</Typography>
+        <DynamicBreadcrumbs
+          items={[
+            {
+              label: "Forside",
+              href: "/",
+            },
+            {
+              label: pageTitle,
+            },
+          ]}
+        />
+        <Typography variant="h1">{pageTitle}</Typography>
         <Typography variant="h6">
           Vilkår og betingelser
           <br />
