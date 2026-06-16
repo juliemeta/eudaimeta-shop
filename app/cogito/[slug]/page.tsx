@@ -6,7 +6,7 @@ import { Box, Button, Divider, Typography } from "@mui/material";
 
 async function getPost(slug: string) {
   const res = await fetch(
-    `https://eudaimeta.dk/wp-json/wp/v2/posts?slug=${slug}&_embed`,
+    `${process.env.NEXT_PUBLIC_WC_URL}/wp-json/wp/v2/posts?slug=${slug}&_embed`,
     {
       next: { revalidate: 60 },
     },

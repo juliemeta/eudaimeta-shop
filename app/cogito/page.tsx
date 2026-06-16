@@ -18,9 +18,12 @@ export const metadata: Metadata = {
 };
 
 async function getPosts() {
-  const res = await fetch("https://eudaimeta.dk/wp-json/wp/v2/posts", {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_WC_URL}/wp-json/wp/v2/posts`,
+    {
+      next: { revalidate: 60 },
+    },
+  );
 
   return res.json();
 }
