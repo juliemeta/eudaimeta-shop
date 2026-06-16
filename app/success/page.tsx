@@ -1,7 +1,15 @@
+"use client";
+
+import { useEffect } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
 
 export default function SuccessPage() {
-  useCartStore.getState().clearCart();
+  const clearCart = useCartStore((state) => state.clearCart);
+
+  useEffect(() => {
+    clearCart();
+  }, [clearCart]);
+
   return (
     <div>
       <h1>Tak for din ordre 🎉</h1>

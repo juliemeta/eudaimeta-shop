@@ -28,7 +28,7 @@ type Product = {
   slug: string;
   price: string;
 
-  type: string;
+  type?: "simple" | "variable";
 
   images: { src: string }[];
 
