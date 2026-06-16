@@ -8,7 +8,7 @@ import { Metadata } from "next";
 const pageTitle = "Shop";
 
 const pageDescription =
-  "Bæredygtigt produceret tilbehør og udvalgte produkter til en mere bevidst hverdagmed fokus på kvalitet, æstetik og lang levetid.";
+  "Bæredygtigt produceret tilbehør og udvalgte produkter til en mere bevidst hverdag med fokus på kvalitet, æstetik og lang levetid.";
 
 export const metadata: Metadata = {
   title: `${pageTitle} | Eudaimeta`,

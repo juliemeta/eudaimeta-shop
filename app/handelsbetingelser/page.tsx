@@ -52,21 +52,20 @@ export default function Handelsbetingelser() {
             Ansvarlig økonomisk aktør i EU:
           </Typography>
           <Typography>Eudaimeta</Typography>
-          <Typography>[Flexum-adresse]</Typography>
-          <Link
-            href="https://flexum.dk/virtuelt-kontor/formular"
-            target="_blank"
-          >
-            https://flexum.dk/virtuelt-kontor/formular
-          </Link>
-          <Typography>E-mail: [din mail]</Typography>
-          <Typography>CVR: [firma CVR]</Typography>
+          <Typography>
+            <strong>Adresse:</strong> <br /> Metamone Web & Design <br />
+            Lyngbyvej 83A <br />
+            2100 København K
+          </Typography>
+          <Typography>
+            <strong>CVR:</strong> 40764224
+          </Typography>
 
           <Typography sx={{ mt: 2 }}>
             Bemærk: Ovenstående adresse er udelukkende til juridiske
-            henvendelser. Returvarer modtages ikke her. Benyt venligst{" "}
-            <Link href="/kontakt">denne formular</Link> hvis man har brug for at
-            kontakte kundeservice.
+            henvendelser - returvarer modtages ikke her. Benyt venligst{" "}
+            <Link href="/kontakt">denne formular</Link> for at komme i kontakt
+            med kundeservice.
           </Typography>
           <br />
         </Box>
