@@ -1,5 +1,5 @@
 {
-  "name": "juliemeta-shop",
+  "name": "eudaimeta-shop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,7 +19,8 @@
     "next": "16.1.7",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "stripe": "^21.0.1"
+    "stripe": "^21.0.1",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
