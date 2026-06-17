@@ -466,6 +466,12 @@ export function SingleProductView({ product }: any) {
                     type: product.type as "simple" | "variable",
 
                     sizes,
+
+                    variations: variations.map((v) => ({
+                      id: v.id,
+                      size: v.attributes[0]?.option,
+                      price: v.price,
+                    })),
                   });
                 }
               }}

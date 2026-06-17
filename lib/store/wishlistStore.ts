@@ -9,6 +9,12 @@ interface WishlistItem {
   price: string;
   type: "simple" | "variable";
   sizes?: string[];
+
+  variations?: {
+    id: number;
+    size: string;
+    price: string;
+  }[];
 }
 
 interface WishlistStore {

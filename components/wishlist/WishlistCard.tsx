@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Placeholder from "../../public/assets/images/placeholder.png";
 import { useState } from "react";
+import { useCartStore } from "@/lib/store/cartStore";
 
 import {
   BaseImage,
@@ -34,6 +35,11 @@ type Product = {
   images: { src: string }[];
   type: "simple" | "variable";
   sizes?: string[];
+  variations?: {
+    id: number;
+    size: string;
+    price: string;
+  }[];
 };
 
 export default function WishlistCard({ product }: { product: Product }) {
@@ -45,6 +51,12 @@ export default function WishlistCard({ product }: { product: Product }) {
   const secondImage = product.images?.[1]?.src;
   const isSimpleProduct = product.type === "simple";
   const [selectedSize, setSelectedSize] = useState("");
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const selectedVariation = product.variations?.find(
+    (v) => v.size === selectedSize,
+  );
 
   return (
     <StyledCard>
@@ -180,6 +192,23 @@ export default function WishlistCard({ product }: { product: Product }) {
           variant="contained"
           fullWidth
           disabled={!isSimpleProduct && !selectedSize}
+          onClick={() => {
+            addToCart({
+              id: product.id,
+              variation_id: selectedVariation?.id,
+
+              name: product.name,
+
+              price: Number(selectedVariation?.price || product.price),
+
+              image: firstImage,
+              quantity: 1,
+              slug: product.slug,
+              size: selectedSize,
+            });
+
+            removeFromWishlist(product.id);
+          }}
           sx={{
             py: 1.2,
           }}
