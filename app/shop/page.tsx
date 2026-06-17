@@ -3,6 +3,7 @@ import ProductsView from "@/components/productsView/ProductsView";
 import { getProducts } from "@/lib/woocommerce";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { Metadata } from "next";
+import { Typography } from "@mui/material";
 
 // 🎯 SEO
 const pageTitle = "Shop";
@@ -18,9 +19,14 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function Page({ searchParams }: any) {
-  const { sort = "" } = await searchParams;
+  const { sort = "", search = "" } = await searchParams;
 
-  const products = await getProducts(undefined, undefined, undefined, sort);
+  const products = await getProducts(
+    undefined, // category
+    search, // search
+    undefined, // tag
+    sort, // sort
+  );
 
   return (
     <StyledContainer>
@@ -35,6 +41,11 @@ export default async function Page({ searchParams }: any) {
           },
         ]}
       />
+      {search && (
+        <Typography variant="h2" sx={{ mb: 4 }}>
+          Søgeresultater for "{search}"
+        </Typography>
+      )}
       <ProductsView products={products} />
     </StyledContainer>
   );

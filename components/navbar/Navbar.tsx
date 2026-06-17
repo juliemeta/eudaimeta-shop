@@ -135,7 +135,7 @@ export default function Navbar({ categories }: any) {
 
     if (!search.trim()) return;
 
-    router.push(`/products?search=${search}`);
+    router.push(`/shop?search=${encodeURIComponent(search)}`);
     handleSelect();
   };
 
@@ -295,7 +295,7 @@ export default function Navbar({ categories }: any) {
                     }}
                   >
                     <StyledLink
-                      href={`/products?search=${search}`}
+                      href={`/shop?search=${encodeURIComponent(search)}`}
                       onClick={handleSelect}
                     >
                       Se alle søgeresultater →
