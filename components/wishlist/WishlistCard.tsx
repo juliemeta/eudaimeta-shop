@@ -58,6 +58,8 @@ export default function WishlistCard({ product }: { product: Product }) {
     (v) => v.size === selectedSize,
   );
 
+  console.log("Wishlist product", product);
+
   return (
     <StyledCard>
       {/* IMAGE */}
@@ -196,15 +198,17 @@ export default function WishlistCard({ product }: { product: Product }) {
             addToCart({
               id: product.id,
               variation_id: selectedVariation?.id,
-
               name: product.name,
-
               price: Number(selectedVariation?.price || product.price),
-
               image: firstImage,
               quantity: 1,
               slug: product.slug,
+
               size: selectedSize,
+              sizes: product.sizes,
+
+              type: product.type,
+              variations: product.variations,
             });
 
             removeFromWishlist(product.id);

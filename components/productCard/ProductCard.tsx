@@ -54,8 +54,9 @@ export default function ProductCard({ product }: { product: Product }) {
   const firstImage = product.images?.[0]?.src || Placeholder.src;
   const secondImage = product.images?.[1]?.src;
   const sizes =
-    product.attributes?.find((attr: any) => attr.name === "Størrelse")
-      ?.options || [];
+    product.attributes?.find((attr: any) =>
+      ["Størrelse", "Size"].includes(attr.name),
+    )?.options || [];
 
   return (
     <>

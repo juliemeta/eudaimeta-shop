@@ -19,7 +19,7 @@ export default function BannerSection({
   title,
   image,
   overlay = "#f2f0ec59",
-  height = "60vh",
+  height = "30vh",
 }: BannerSectionProps) {
   return (
     <BannerContainer

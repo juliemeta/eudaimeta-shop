@@ -12,6 +12,16 @@ type CartItem = {
   quantity: number;
   slug: string;
   size?: string;
+
+  sizes?: string[];
+
+  type?: "simple" | "variable";
+
+  variations?: {
+    id: number;
+    size: string;
+    price: string;
+  }[];
 };
 
 const isSameItem = (a: CartItem, b: { id: number; variation_id?: number }) =>

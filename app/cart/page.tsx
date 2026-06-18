@@ -12,11 +12,17 @@ import {
   SelectQuantityButton,
   SelectQuantityWrapper,
 } from "./page.styles";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import { useWishlistStore } from "@/lib/store/wishlistStore";
 
 export default function CartPage() {
   const { items, updateQty, removeFromCart } = useCartStore();
+  const { addToWishlist, removeFromWishlist, isInWishlist } =
+    useWishlistStore();
 
   return (
     <StyledContainer>
@@ -51,6 +57,41 @@ export default function CartPage() {
                     Størrelse: {item.size}
                   </Typography>
                 )}
+
+                {/* 💜 ADD TO WISHLIST */}
+                <Box sx={{ mt: 1 }}>
+                  <Button
+                    size="small"
+                    startIcon={
+                      isInWishlist(item.id) ? (
+                        <FavoriteIcon />
+                      ) : (
+                        <FavoriteBorderIcon />
+                      )
+                    }
+                    onClick={() => {
+                      console.log("Cart item", item);
+                      if (isInWishlist(item.id)) {
+                        removeFromWishlist(item.id);
+                      } else {
+                        addToWishlist({
+                          id: item.id,
+                          name: item.name,
+                          slug: item.slug,
+                          images: item.image ? [{ src: item.image }] : [],
+                          price: String(item.price),
+                          type: item.type ?? "simple",
+                          sizes: item.sizes,
+                          variations: item.variations,
+                        });
+                        removeFromCart(item.id, item.variation_id);
+                      }
+                    }}
+                  >
+                    {isInWishlist(item.id) ? "Allerede gemt" : "Gem til senere"}
+                  </Button>
+                </Box>
+
                 {/* Update quantity */}
                 <SelectQuantityWrapper>
                   <SelectQuantityButton

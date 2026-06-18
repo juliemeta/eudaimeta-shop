@@ -93,7 +93,6 @@ export function SingleProductView({ product }: any) {
     fetch(`/api/variations?productId=${product.id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("VARIATIONS:", data);
         setVariations(data);
       })
       .catch(console.error);
@@ -444,6 +443,11 @@ export function SingleProductView({ product }: any) {
                   quantity: qty,
                   slug: product.slug,
                   size: selectedSize,
+
+                  sizes,
+
+                  type: product.type,
+                  variations,
                 });
               }}
             >

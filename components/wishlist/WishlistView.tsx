@@ -8,6 +8,7 @@ import { DynamicBreadcrumbs } from "../breadcrumbs/dynamicBreadcrumbs";
 
 export default function WishlistView() {
   const wishlistItems = useWishlistStore((state) => state.items);
+  console.log(wishlistItems);
 
   return (
     <StyledContainer>
