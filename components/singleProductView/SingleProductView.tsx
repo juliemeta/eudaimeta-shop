@@ -196,7 +196,7 @@ export function SingleProductView({ product }: any) {
             sx={{
               position: "relative",
               width: "100%",
-              height: { xs: 400, md: 700 },
+              height: { xs: 320, sm: 500, md: 700 },
               cursor: "pointer",
             }}
           >

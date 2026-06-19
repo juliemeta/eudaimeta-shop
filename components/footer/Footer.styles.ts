@@ -4,4 +4,8 @@ export const FooterContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.footer,
   padding: theme.spacing(3),
   marginTop: theme.spacing(8),
+
+  [theme.breakpoints.down("md")]: {
+    paddingInline: theme.spacing(3),
+  },
 }));

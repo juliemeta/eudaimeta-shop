@@ -10,7 +10,11 @@ export const StyledContainer = ({
       sx={{
         maxWidth: 1200,
         margin: "auto",
-        padding: 5,
+        padding: {
+          xs: 2,
+          sm: 3,
+          md: 5,
+        },
       }}
     >
       {children}
