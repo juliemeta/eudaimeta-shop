@@ -16,13 +16,23 @@ type Product = {
   sizes?: string[];
 };
 
-export default function WishlistGrid({ products }: { products: Product[] }) {
+export default function WishlistGrid({
+  products,
+  onMoveToCart,
+}: {
+  products: Product[];
+  onMoveToCart: () => void;
+}) {
   return (
     <>
       <WishlistGridContainer>
         {Array.isArray(products) &&
           products.map((product) => (
-            <WishlistCard key={product.slug} product={product} />
+            <WishlistCard
+              key={product.slug}
+              product={product}
+              onMoveToCart={onMoveToCart}
+            />
           ))}
       </WishlistGridContainer>
     </>

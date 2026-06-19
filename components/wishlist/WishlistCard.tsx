@@ -23,6 +23,7 @@ import {
   IconButton,
   MenuItem,
   Select,
+  Snackbar,
 } from "@mui/material";
 
 import { useWishlistStore } from "@/lib/store/wishlistStore";
@@ -42,7 +43,13 @@ type Product = {
   }[];
 };
 
-export default function WishlistCard({ product }: { product: Product }) {
+export default function WishlistCard({
+  product,
+  onMoveToCart,
+}: {
+  product: Product;
+  onMoveToCart: () => void;
+}) {
   const removeFromWishlist = useWishlistStore(
     (state) => state.removeFromWishlist,
   );
@@ -210,6 +217,8 @@ export default function WishlistCard({ product }: { product: Product }) {
               type: product.type,
               variations: product.variations,
             });
+
+            onMoveToCart();
 
             removeFromWishlist(product.id);
           }}

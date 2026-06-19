@@ -8,7 +8,7 @@ export default function UndoSnackbars() {
 
   return (
     <>
-      {deletedItems.map(({ item, undoId }, index) => (
+      {deletedItems.map(({ item, undoId, reason }, index) => (
         <Snackbar
           key={undoId}
           open
@@ -16,7 +16,11 @@ export default function UndoSnackbars() {
           sx={{
             bottom: `${16 + index * 70}px !important`, // stacking
           }}
-          message={`"${item.name}" slettet fra kurv`}
+          message={
+            reason === "saved"
+              ? `"${item.name}" gemt i favoritter`
+              : `"${item.name}" slettet fra kurv`
+          }
           action={
             <Button
               color="error"

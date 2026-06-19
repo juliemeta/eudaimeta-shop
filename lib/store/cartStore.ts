@@ -30,6 +30,7 @@ const isSameItem = (a: CartItem, b: { id: number; variation_id?: number }) =>
 type DeletedItem = {
   item: CartItem;
   undoId: number;
+  reason?: "removed" | "saved";
 };
 
 type CartStore = {
@@ -100,7 +101,7 @@ export const useCartStore = create<CartStore>()(
             ),
             deletedItems: [
               ...state.deletedItems,
-              { item: itemToRemove, undoId },
+              { item: itemToRemove, undoId, reason: "removed" },
             ],
           };
         }),
