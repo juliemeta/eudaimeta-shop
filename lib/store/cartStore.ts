@@ -39,6 +39,7 @@ type CartStore = {
 
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number, variation_id?: number) => void;
+  saveForLater: (id: number, variation_id?: number) => void;
   undoRemove: (undoId: number) => void;
 
   updateQty: (id: number, qty: number, variation_id?: number) => void;
@@ -102,6 +103,40 @@ export const useCartStore = create<CartStore>()(
             deletedItems: [
               ...state.deletedItems,
               { item: itemToRemove, undoId, reason: "removed" },
+            ],
+          };
+        }),
+
+      // 💜 Save item for later
+      saveForLater: (id, variation_id) =>
+        set((state) => {
+          const itemToRemove = state.items.find((i) =>
+            isSameItem(i, { id, variation_id }),
+          );
+
+          if (!itemToRemove) return state;
+
+          const undoId = undoIdCounter++;
+
+          setTimeout(() => {
+            set((state) => ({
+              deletedItems: state.deletedItems.filter(
+                (d) => d.undoId !== undoId,
+              ),
+            }));
+          }, 10000);
+
+          return {
+            items: state.items.filter(
+              (i) => !isSameItem(i, { id, variation_id }),
+            ),
+            deletedItems: [
+              ...state.deletedItems,
+              {
+                item: itemToRemove,
+                undoId,
+                reason: "saved",
+              },
             ],
           };
         }),

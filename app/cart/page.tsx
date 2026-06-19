@@ -20,7 +20,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useWishlistStore } from "@/lib/store/wishlistStore";
 
 export default function CartPage() {
-  const { items, updateQty, removeFromCart } = useCartStore();
+  const { items, updateQty, removeFromCart, saveForLater } = useCartStore();
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useWishlistStore();
 
@@ -84,7 +84,7 @@ export default function CartPage() {
                           sizes: item.sizes,
                           variations: item.variations,
                         });
-                        removeFromCart(item.id, item.variation_id);
+                        saveForLater(item.id, item.variation_id);
                       }
                     }}
                   >
