@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
 export const HeroContainer = styled(Box)(({ theme }) => ({
-  backgroundImage: 'url("/assets/images/baeltetaske-galaxy.png")',
+  backgroundImage: 'url("/assets/images/blomster-kasket-eudaimeta.jpg")',
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -16,7 +16,7 @@ export const HeroContainer = styled(Box)(({ theme }) => ({
     content: '""',
     position: "absolute",
     inset: 0,
-    background: "#f2f0ec59",
+    background: "#f2f0ecb0",
     zIndex: 0,
   },
 }));
