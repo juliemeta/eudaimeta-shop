@@ -6,22 +6,22 @@ const posts = [
   {
     id: "1",
     image: "/assets/images/instagram/post1.jpeg",
-    link: "https://www.instagram.com/p/CTQJU7EIOr2/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    link: "https://www.instagram.com/p/CTQJU7EIOr2/",
   },
   {
     id: "2",
     image: "/assets/images/instagram/post2.jpeg",
-    link: "https://www.instagram.com/p/CTUPme2o9Vp/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+    link: "https://www.instagram.com/p/CTUPme2o9Vp/",
   },
   {
     id: "3",
-    image: "/assets/images/instagram/post1.jpeg",
-    link: "https://www.instagram.com/p/ZZZZZZZZ/",
+    image: "/assets/images/instagram/post3.jpeg",
+    link: "https://www.instagram.com/p/DaVLAUFuwHK/",
   },
   {
     id: "4",
-    image: "/assets/images/instagram/post1.jpeg",
-    link: "https://www.instagram.com/p/AAAAAAA/",
+    image: "/assets/images/blomster-kasket-eudaimeta.jpg",
+    link: "https://www.instagram.com/eudaimeta/",
   },
 ];
 
