@@ -137,6 +137,8 @@ export async function getProducts(
     params.append("featured", "true");
   }
 
+  params.append("status", "publish");
+
   params.append("per_page", String(perPage));
   params.append("page", String(page));
 
@@ -153,7 +155,7 @@ export async function getAllProducts() {
   let allProducts: any[] = [];
 
   while (true) {
-    const url = `${BASE_URL}/products?per_page=50&page=${page}`;
+    const url = `${BASE_URL}/products?status=publish&per_page=50&page=${page}`;
 
     const data = await safeFetch(url, {
       next: { revalidate: 60 * 5 },
@@ -179,7 +181,7 @@ export async function getAllProductsCached() {
 
 // --- Single Product ---
 export async function getProduct(slug: string) {
-  const url = `${BASE_URL}/products?slug=${slug}`;
+  const url = `${BASE_URL}/products?slug=${slug}&status=publish`;
 
   const data = await safeFetch(url, {
     cache: "no-store",
