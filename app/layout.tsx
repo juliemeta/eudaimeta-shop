@@ -25,6 +25,13 @@ export default async function RootLayout({
 
   return (
     <html lang="da">
+      <head>
+        <meta
+          name="p:domain_verify"
+          content="075b7352f784a4e4970f866bb3013689"
+        />
+      </head>
+
       <body className={`${inter.variable} ${playfair.variable}`}>
         <ThemeRegistry>
           <Box
