@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
 import FrontPageHero from "@/components/hero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
@@ -54,6 +54,16 @@ export default async function HomePage() {
     4,
   );
 
+  const framedPostersProducts = await getProducts(
+    "indrammede-plakater",
+    undefined,
+    undefined,
+    undefined,
+    1,
+    false,
+    6,
+  );
+
   return (
     <>
       <FrontPageHero />
@@ -69,6 +79,16 @@ export default async function HomePage() {
         <Box sx={{ mt: 8 }}>
           <Typography variant="h3">Nyt</Typography>
           <ProductGrid products={newProducts} />
+        </Box>
+
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h3">Astrologi</Typography>
+          <ProductGrid products={framedPostersProducts} />
+          <Typography variant="h4">
+            <Link href="/shop/category/indrammede-plakater">
+              Se flere stjernetegn ➡
+            </Link>
+          </Typography>
         </Box>
       </StyledContainer>
     </>
