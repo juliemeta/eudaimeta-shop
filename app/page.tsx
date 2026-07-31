@@ -70,12 +70,6 @@ export default async function HomePage() {
           <Typography variant="h3">Nyt</Typography>
           <ProductGrid products={newProducts} />
         </Box>
-
-        <Typography variant="h4">Hello from Homepage</Typography>
-        <Typography variant="h5">Hello from Homepage</Typography>
-        <Typography variant="h6">Hello from Homepage</Typography>
-        <Typography variant="body1">Discover our products</Typography>
-        <Typography variant="body2">Discover our products</Typography>
       </StyledContainer>
     </>
   );
