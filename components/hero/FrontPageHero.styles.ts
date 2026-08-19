@@ -2,23 +2,15 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
 export const HeroContainer = styled(Box)(({ theme }) => ({
-  backgroundImage: 'url("/assets/images/blomster-kasket-eudaimeta.jpg")',
+  backgroundImage: 'url("/assets/images/galaxy-red-vandflaske.jpg")',
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  height: "100vh",
+  height: "95vh",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   position: "relative",
-
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    inset: 0,
-    background: "#f2f0ecb0",
-    zIndex: 0,
-  },
 }));
 
 export const HeroWrapper = styled(Box)({
@@ -34,4 +26,17 @@ export const HeroContent = styled(Box)(({ theme }) => ({
   maxWidth: 600,
   position: "relative",
   textAlign: "center",
+
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    inset: 0,
+    background: "#ffffffc0",
+    zIndex: 0,
+  },
+
+  "& > *": {
+    position: "relative",
+    zIndex: 1,
+  },
 }));

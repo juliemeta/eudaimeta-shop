@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { SxProps, Theme, Typography } from "@mui/material";
 
 import {
   BannerContainer,
@@ -13,6 +13,7 @@ type BannerSectionProps = {
   image: string;
   overlay?: string;
   height?: string;
+  sx?: SxProps<Theme>;
 };
 
 export default function BannerSection({
@@ -20,6 +21,7 @@ export default function BannerSection({
   image,
   overlay = "#f2f0ec59",
   height = "30vh",
+  sx,
 }: BannerSectionProps) {
   return (
     <BannerContainer
@@ -29,6 +31,7 @@ export default function BannerSection({
         "&::before": {
           background: overlay,
         },
+        ...sx,
       }}
     >
       <BannerWrapper>

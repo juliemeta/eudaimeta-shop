@@ -13,8 +13,8 @@ export default function FrontPageHero() {
       <HeroContainer>
         <HeroWrapper>
           <HeroContent>
-            <Typography variant="h1">Festival & sommer</Typography>
-            <Button variant="contained" href="/tag/festival">
+            <Typography variant="h1">Out & About</Typography>
+            <Button variant="contained" href="/tag/on-the-go">
               Shop nu
             </Button>
           </HeroContent>

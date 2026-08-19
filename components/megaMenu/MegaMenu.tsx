@@ -88,6 +88,8 @@ export default function MegaMenu({ categories }: { categories: Category[] }) {
             <Box sx={{ mt: 2 }}>
               <StyledLink href="/shop" onClick={() => setMobileOpen(false)}>
                 <Typography fontWeight={600}>👉 Se de nyeste varer</Typography>
+                <br />
+                <StyledLink href="/cogito">🧾 Cogito meta sum</StyledLink>
               </StyledLink>
             </Box>
           </MobileMenuContainer>
@@ -131,7 +133,9 @@ export default function MegaMenu({ categories }: { categories: Category[] }) {
           ))}
 
           <MegaMenuRow>
-            <StyledLink href="/shop">👉 Se de nyeste varer</StyledLink>
+            <StyledLink href="/shop">👉 Se de nyeste varer</StyledLink> <br />{" "}
+            <br />
+            <StyledLink href="/cogito">🧾 Cogito meta sum</StyledLink>
           </MegaMenuRow>
         </MegaMenuDropdown>
       )}
