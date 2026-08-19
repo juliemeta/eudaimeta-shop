@@ -14,7 +14,7 @@ export default function FrontPageHero() {
         <HeroWrapper>
           <HeroContent>
             <Typography variant="h1">Out & About</Typography>
-            <Button variant="contained" href="/tag/on-the-go">
+            <Button variant="contained" href="/tag/out-and-about">
               Shop nu
             </Button>
           </HeroContent>
