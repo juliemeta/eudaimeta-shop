@@ -39,7 +39,7 @@ export default function Handelsbetingelser() {
         <Typography variant="h6">
           Vilkår og betingelser
           <br />
-          Version 9.4.24
+          Version 04.26
         </Typography>
         <Typography>
           Når man foretager et køb hos www.eudaimeta.dk bliver man kunde og

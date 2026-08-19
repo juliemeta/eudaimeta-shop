@@ -2,7 +2,7 @@ import BannerSection from "@/components/banner/BannerSection";
 import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 async function getPosts() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_WC_URL}/wp-json/wp/v2/posts`,
+    `${process.env.NEXT_PUBLIC_WC_URL}/wp-json/wp/v2/posts?_embed`,
     {
       next: { revalidate: 60 },
     },
@@ -35,8 +35,8 @@ export default async function CogitoPage() {
     <>
       <BannerSection
         title={pageTitle}
-        image="/assets/images/cogito-meta-sum.png"
-        overlay="#f2f0ecf5"
+        image="/assets/images/galaxy-sky-photo-by-darla-rohova.jpg"
+        overlay="#f2f0ec7c"
       />
       <StyledContainer>
         <StyledTextWrapper>
@@ -48,27 +48,58 @@ export default async function CogitoPage() {
               },
             ]}
           />
-          {posts.map((post: any) => (
-            <article key={post.id} style={{ marginBottom: "4rem" }}>
-              <Link href={`/cogito/${post.slug}`}>
-                <h2
+          {posts.map((post: any) => {
+            const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0];
+
+            return (
+              <article key={post.id} style={{ marginBottom: "4rem" }}>
+                <Link
+                  href={`/cogito/${post.slug}`}
                   style={{
-                    fontSize: "2rem",
-                    marginBottom: "1rem",
-                    cursor: "pointer",
+                    textDecoration: "none",
+                    color: "inherit",
                   }}
                 >
-                  {post.title.rendered}
-                </h2>
-              </Link>
+                  {featuredImage?.source_url && (
+                    <Box
+                      component="img"
+                      src={featuredImage.source_url}
+                      alt={featuredImage.alt_text || post.title.rendered}
+                      sx={{
+                        display: "block",
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: 1,
+                        mb: 2,
+                      }}
+                    />
+                  )}
 
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: post.excerpt.rendered,
-                }}
-              />
-            </article>
-          ))}
+                  <Typography
+                    variant="h2"
+                    style={{
+                      fontSize: "2rem",
+                      marginBottom: "1rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {post.title.rendered}
+                  </Typography>
+                </Link>
+
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: post.excerpt.rendered,
+                  }}
+                />
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <Button variant="outlined" href={`/cogito/${post.slug}`}>
+                    Læs "{post.title.rendered}" ➡
+                  </Button>
+                </Box>
+              </article>
+            );
+          })}
           <Button href="/">👉 Til forsiden</Button>
         </StyledTextWrapper>
       </StyledContainer>

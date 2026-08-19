@@ -35,7 +35,7 @@ export default function CookiesOgPersondata() {
         />
         <Typography variant="h1">{pageTitle}</Typography>
         <Typography variant="body2" sx={{ textAlign: "center" }}>
-          Sidst opdateret maj 2026
+          Version 05.26
         </Typography>
 
         <Typography sx={{ mb: 4 }}>
@@ -164,10 +164,11 @@ export default function CookiesOgPersondata() {
           {/* Rettigheder */}
           <Box>
             <Typography variant="h2">Dine rettigheder</Typography>
-
             <Typography>
               Du har ret til at få indsigt i de oplysninger, vi behandler om
-              dig, samt få oplysninger rettet eller slettet.
+              dig, samt få oplysninger rettet eller slettet. Hvis du ønsker at
+              kontakte os vedrørende persondata, er du velkommen til at skrive
+              os via vores <Link href="/kontakt">kontaktformular</Link>.
             </Typography>
           </Box>
 
@@ -176,16 +177,14 @@ export default function CookiesOgPersondata() {
             <Typography variant="h3">Udgiver</Typography>
 
             <Typography>
-              <strong>Metamone Web & Design</strong>
+              <strong>Eudaimeta</strong> <br />
+              Metamone Web & Design
               <br />
               Lyngbyvej 83A <br />
               2100 København Ø
               <br /> <br />
-              <strong>CVR</strong> 40764224
+              <strong>CVR:</strong> 40764224
               <br /> <br />
-              Hvis du ønsker at kontakte os vedrørende persondata, er du
-              velkommen til at skrive os via vores{" "}
-              <Link href="/kontakt">kontaktformular</Link>.
             </Typography>
           </Box>
         </Box>
