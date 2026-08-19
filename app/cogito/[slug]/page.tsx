@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { DynamicBreadcrumbs } from "@/components/breadcrumbs/dynamicBreadcrumbs";
 import { StyledContainer } from "@/styles/StyledContainer";
 import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Link, Typography } from "@mui/material";
+import React from "react";
 
 async function getPost(slug: string) {
   const res = await fetch(
@@ -61,9 +62,11 @@ export default async function PostPage({ params }: Props) {
     );
   }
 
-  const categories = post._embedded?.["wp:term"]?.flat() || [];
+  const terms = post._embedded?.["wp:term"]?.flat() || [];
 
-  const category = categories.find((term: any) => term.taxonomy === "category");
+  const category = terms.find((term: any) => term.taxonomy === "category");
+
+  const tags = terms.filter((term: any) => term.taxonomy === "post_tag");
 
   const formattedDate = new Date(post.date).toLocaleDateString("da-DK", {
     day: "numeric",
@@ -80,23 +83,43 @@ export default async function PostPage({ params }: Props) {
               label: "Forside",
               href: "/",
             },
-
             {
               label: "Cogito Meta Sum",
               href: "/cogito",
             },
-
             {
               label: post.title.rendered,
             },
           ]}
         />
 
+        {/* Featured image */}
+        {post._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
+          <Box
+            component="img"
+            src={post._embedded["wp:featuredmedia"][0].source_url}
+            alt={
+              post._embedded["wp:featuredmedia"][0].alt_text ||
+              post.title.rendered
+            }
+            sx={{
+              display: "block",
+              width: "100%",
+              maxWidth: "900",
+              height: "auto",
+              borderRadius: 1,
+              mb: 4,
+            }}
+          />
+        )}
+
         <Typography variant="h1">{post.title.rendered}</Typography>
 
+        {/* Category + tags + date */}
         <Box
           sx={{
             display: "flex",
+            justifyContent: "center",
             alignItems: "center",
             gap: 1,
             mb: 6,
@@ -104,8 +127,49 @@ export default async function PostPage({ params }: Props) {
           }}
         >
           {category && (
-            <Typography variant="caption">{category.name}</Typography>
+            <>
+              <Typography
+                component={Link}
+                href={`/cogito/category/${category.slug}`}
+                variant="caption"
+                sx={{
+                  color: "inherit",
+                  textDecoration: "none",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                {category.name}
+              </Typography>
+
+              <Typography variant="caption">·</Typography>
+            </>
           )}
+
+          {tags.length > 0 &&
+            tags.map((tag: any, index: number) => (
+              <React.Fragment key={tag.id}>
+                <Typography
+                  component={Link}
+                  href={`/cogito/tag/${tag.slug}`}
+                  variant="caption"
+                  sx={{
+                    color: "inherit",
+                    textDecoration: "none",
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
+                  }}
+                >
+                  #{tag.name}
+                </Typography>
+
+                {index < tags.length - 1 && (
+                  <Typography variant="caption">·</Typography>
+                )}
+              </React.Fragment>
+            ))}
 
           <Typography variant="caption">·</Typography>
 

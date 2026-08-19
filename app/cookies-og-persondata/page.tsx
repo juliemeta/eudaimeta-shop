@@ -169,13 +169,6 @@ export default function CookiesOgPersondata() {
               Du har ret til at få indsigt i de oplysninger, vi behandler om
               dig, samt få oplysninger rettet eller slettet.
             </Typography>
-
-            <Typography sx={{ mt: 2 }}>
-              Hvis du ønsker at kontakte os vedrørende persondata, kan du skrive
-              til:
-            </Typography>
-
-            <Typography sx={{ mt: 1 }}>kontakt@eudaimeta.dk</Typography>
           </Box>
 
           {/* Udgiver */}
@@ -183,14 +176,15 @@ export default function CookiesOgPersondata() {
             <Typography variant="h3">Udgiver</Typography>
 
             <Typography>
-              Eudaimeta
+              <strong>Metamone Web & Design</strong>
               <br />
-              [Juridisk adresse / Flexum]
-              <br />
-              CVR: [CVR-nummer]
+              Lyngbyvej 83A <br />
+              2100 København Ø
               <br /> <br />
-              Hvis du ønsker indsigt i eller sletning af dine oplysninger, er du
-              velkommen til at kontakte os via vores{" "}
+              <strong>CVR</strong> 40764224
+              <br /> <br />
+              Hvis du ønsker at kontakte os vedrørende persondata, er du
+              velkommen til at skrive os via vores{" "}
               <Link href="/kontakt">kontaktformular</Link>.
             </Typography>
           </Box>
