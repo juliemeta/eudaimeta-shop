@@ -36,7 +36,7 @@ export default async function CogitoPage() {
       <BannerSection
         title={pageTitle}
         image="/assets/images/galaxy-sky-photo-by-darla-rohova.jpg"
-        overlay="#f2f0ec6b"
+        overlay="#f2f0ec50"
         sx={{
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
