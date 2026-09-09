@@ -9,13 +9,21 @@ export const BannerContainer = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   position: "relative",
+  overflow: "hidden",
 
   "&::before": {
     content: '""',
     position: "absolute",
     inset: 0,
-    zIndex: 0,
+    zIndex: 1,
   },
+});
+
+export const BannerBackground = styled(Box)({
+  position: "absolute",
+  inset: 0,
+  zIndex: 0,
+  pointerEvents: "none",
 });
 
 export const BannerWrapper = styled(Box)({
@@ -24,6 +32,8 @@ export const BannerWrapper = styled(Box)({
   margin: "0 auto",
   display: "flex",
   justifyContent: "center",
+  position: "relative",
+  zIndex: 2,
 });
 
 export const BannerContent = styled(Box)(({ theme }) => ({
@@ -31,5 +41,5 @@ export const BannerContent = styled(Box)(({ theme }) => ({
   maxWidth: 600,
   position: "relative",
   textAlign: "center",
-  zIndex: 1,
+  transform: "translateY(-30px)",
 }));

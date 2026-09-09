@@ -5,6 +5,7 @@ import { StyledTextWrapper } from "@/styles/StyledTextWrapper";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { Metadata } from "next";
+import Galaxy from "@/components/backgrounds/Galaxy";
 
 // 🎯 SEO
 const pageTitle = "Cogito Meta Sum";
@@ -34,14 +35,14 @@ export default async function CogitoPage() {
   return (
     <>
       <BannerSection
-        title={pageTitle}
-        image="/assets/images/galaxy-sky-photo-by-darla-rohova.jpg"
-        overlay="#f2f0ec50"
-        sx={{
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      />
+        title={"Cogito Meta Sum"}
+        image={""}
+        overlay=""
+        height="65vh"
+        titleColor="#ffffff"
+      >
+        <Galaxy transparent={false} lightMode={false} />
+      </BannerSection>
       <StyledContainer>
         <StyledTextWrapper>
           <DynamicBreadcrumbs
@@ -54,6 +55,11 @@ export default async function CogitoPage() {
           />
           {posts.map((post: any) => {
             const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0];
+            const date = new Date(post.date).toLocaleDateString("da-DK", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
 
             return (
               <article key={post.id} style={{ marginBottom: "4rem" }}>
@@ -91,20 +97,36 @@ export default async function CogitoPage() {
                   </Typography>
                 </Link>
 
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 2,
+                    color: "text.secondary",
+                  }}
+                >
+                  {date}
+                </Typography>
+
                 <div
                   dangerouslySetInnerHTML={{
                     __html: post.excerpt.rendered,
                   }}
                 />
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  <Button variant="outlined" href={`/cogito/${post.slug}`}>
+                  <Button
+                    href={`/cogito/${post.slug}`}
+                    sx={{
+                      backgroundColor: "secondary.dark",
+                      "&:hover": { backgroundColor: "secondary.main" },
+                    }}
+                  >
                     Læs "{post.title.rendered}" ➡
                   </Button>
                 </Box>
               </article>
             );
           })}
-          <Button href="/">👉 Til forsiden</Button>
+          <Button href="/">↩ Webshop</Button>
         </StyledTextWrapper>
       </StyledContainer>
     </>

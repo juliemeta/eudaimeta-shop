@@ -1,11 +1,13 @@
 "use client";
 
-import { SxProps, Theme, Typography } from "@mui/material";
+import { Box, SxProps, Theme, Typography } from "@mui/material";
+import { ReactNode } from "react";
 
 import {
   BannerContainer,
   BannerContent,
   BannerWrapper,
+  BannerBackground,
 } from "./BannerSection.styles";
 
 type BannerSectionProps = {
@@ -14,6 +16,8 @@ type BannerSectionProps = {
   overlay?: string;
   height?: string;
   sx?: SxProps<Theme>;
+  children?: ReactNode;
+  titleColor?: string;
 };
 
 export default function BannerSection({
@@ -22,6 +26,8 @@ export default function BannerSection({
   overlay = "#f2f0ec59",
   height = "30vh",
   sx,
+  children,
+  titleColor,
 }: BannerSectionProps) {
   return (
     <BannerContainer
@@ -34,9 +40,27 @@ export default function BannerSection({
         ...sx,
       }}
     >
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 2,
+        }}
+      >
+        {children}
+      </Box>
+
       <BannerWrapper>
         <BannerContent>
-          <Typography variant="h1" component="h2">
+          <Typography
+            variant="h1"
+            component="h2"
+            sx={{
+              color: titleColor,
+            }}
+          >
             {title}
           </Typography>
         </BannerContent>

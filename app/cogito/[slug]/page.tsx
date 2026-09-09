@@ -92,7 +92,6 @@ export default async function PostPage({ params }: Props) {
             },
           ]}
         />
-
         {/* Featured image */}
         {post._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
           <Box
@@ -112,9 +111,7 @@ export default async function PostPage({ params }: Props) {
             }}
           />
         )}
-
         <Typography variant="h1">{post.title.rendered}</Typography>
-
         {/* Category + tags + date */}
         <Box
           sx={{
@@ -175,7 +172,6 @@ export default async function PostPage({ params }: Props) {
 
           <Typography variant="caption">{formattedDate}</Typography>
         </Box>
-
         <Box
           sx={{
             "& h1": {
@@ -231,18 +227,19 @@ export default async function PostPage({ params }: Props) {
             __html: post.content.rendered,
           }}
         />
-
         <Divider variant="middle" />
-
         <br />
-
-        <Button href="/">👉 Til forsiden</Button>
-
-        <br />
-
-        <Button variant="outlined" href="/cogito">
-          ↩ Tilbage til oversigt
+        <Button
+          href="/cogito"
+          sx={{
+            backgroundColor: "secondary.dark",
+            "&:hover": { backgroundColor: "secondary.main" },
+          }}
+        >
+          Se flere indlæg
         </Button>
+        <br /> <br />
+        <Button href="/">↩ Webshop</Button>
       </StyledTextWrapper>
     </StyledContainer>
   );
