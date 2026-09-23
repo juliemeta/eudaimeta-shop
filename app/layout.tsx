@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { getCategories } from "@/lib/woocommerce";
 import ThemeRegistry from "./themeRegistry";
 import StyledFooter from "@/components/footer/Footer";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -49,6 +50,7 @@ export default async function RootLayout({
           </Box>
         </ThemeRegistry>
       </body>
+      <GoogleTagManager gtmId="GTM-WTVSZL26" />
     </html>
   );
 }
