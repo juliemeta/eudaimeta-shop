@@ -52,7 +52,7 @@ export default async function HomePage() {
     "newest",
     1,
     false,
-    4,
+    8,
   );
 
   const framedPostersProducts = await getProducts(
@@ -62,7 +62,7 @@ export default async function HomePage() {
     undefined,
     1,
     false,
-    4,
+    8,
   );
 
   return (
@@ -73,26 +73,31 @@ export default async function HomePage() {
         <CategoryGrid categories={featuredCategories} />
 
         <Box sx={{ mt: 8 }}>
-          <Typography variant="h2">Aktuelt</Typography>
+          <Typography variant="h2">Udvalgte varer</Typography>
           <ProductGrid products={featuredProducts} />
         </Box>
 
         <Box sx={{ mt: 8 }}>
-          <Typography variant="h3">Nyt</Typography>
+          <Typography variant="h3">Nyeste varer</Typography>
           <ProductGrid products={newProducts} />
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button variant="outlined" href="/shop/">
+              Se flere nye varer
+            </Button>
+          </Box>
         </Box>
 
         <Box sx={{ mt: 8 }}>
           <Typography variant="h3">Astrologi</Typography>
           <ProductGrid products={framedPostersProducts} />
-          <Typography variant="h4">
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
-              variant="contained"
+              variant="outlined"
               href="/shop/category/indrammede-plakater"
             >
-              Se flere stjernetegn ➡
+              Se alle stjernetegn
             </Button>
-          </Typography>
+          </Box>
         </Box>
       </StyledContainer>
     </>

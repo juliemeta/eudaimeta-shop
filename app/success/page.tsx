@@ -64,13 +64,14 @@ export default function SuccessPage() {
           </Button>
           <br /> <br />
           Du kan også lukke denne side ned og fortsætte med dagens gøremål,
-          eller måske... bare slappe af 😊
+          eller måske bare... slappe af 😊
         </Box>
-        <Box sx={{ alignContent: "center" }}>
-          <Link href="https://dk.pinterest.com/eudaimeta/" target="_blank">
-            <PinterestIcon sx={{ color: "#E60023" }} />
-          </Link>
-        </Box>
+      </Box>
+      <br />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Link href="https://dk.pinterest.com/eudaimeta/" target="_blank">
+          <PinterestIcon sx={{ color: "#E60023" }} />
+        </Link>
       </Box>
     </StyledContainer>
   );
