@@ -6,7 +6,7 @@ export default function CategoryCard({ category }: any) {
       <img
         src={category.image?.src}
         alt={category.name}
-        style={{ width: "100%", borderRadius: 8 }}
+        style={{ width: "100%", borderRadius: "50%" }}
       />
 
       <Typography variant="h6" sx={{ mt: 1 }}>

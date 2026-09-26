@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProduct } from "@/lib/woocommerce";
+import { getProduct, getProducts } from "@/lib/woocommerce";
 import { SingleProductView } from "../../../components/singleProductView/SingleProductView";
 
 type Props = {
@@ -41,5 +41,25 @@ export default async function ProductPage({ params }: Props) {
     return notFound();
   }
 
-  return <SingleProductView product={product} />;
+  const category = product.categories?.[0];
+
+  const relatedProducts = category
+    ? (
+        await getProducts(
+          category.slug,
+          undefined,
+          undefined,
+          undefined,
+          1,
+          undefined,
+          5,
+        )
+      )
+        .filter((item: any) => item.id !== product.id)
+        .slice(0, 4)
+    : [];
+
+  return (
+    <SingleProductView product={product} relatedProducts={relatedProducts} />
+  );
 }

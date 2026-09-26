@@ -3,6 +3,10 @@ import Box from "@mui/material/Box";
 
 export const CategoryGridContainer = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+  gridTemplateColumns: "repeat(2, 1fr)",
+
+  [theme.breakpoints.up("sm")]: {
+    gridTemplateColumns: "repeat(4, 1fr)",
+  },
   gap: theme.spacing(3),
 }));

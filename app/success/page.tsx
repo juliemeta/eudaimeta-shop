@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useCartStore } from "@/lib/store/cartStore";
 import { Button, Typography, Box } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import { color } from "framer-motion";
 
 export default function SuccessPage() {
   const clearCart = useCartStore((state) => state.clearCart);
@@ -52,16 +54,22 @@ export default function SuccessPage() {
         </Typography>
         <Box sx={{ textAlign: "left" }}>
           <Button component={Link} href="/faq" size="large">
-            ▪ Læse vores FAQ 🤓
+            👉 Læse vores FAQ
           </Button>
-
           <Button component={Link} href="/cogito" size="large">
-            ▪ Udforske Cogito meta sum ✨
+            👉 Udforske Cogito meta sum
           </Button>
-
           <Button component={Link} href="/" size="large">
-            ▪ Tilbage til forsiden 🏡
+            👉 Til forsiden
           </Button>
+          <br /> <br />
+          Du kan også lukke denne side ned og fortsætte med dagens gøremål,
+          eller måske... bare slappe af 😊
+        </Box>
+        <Box sx={{ alignContent: "center" }}>
+          <Link href="https://dk.pinterest.com/eudaimeta/" target="_blank">
+            <PinterestIcon sx={{ color: "#E60023" }} />
+          </Link>
         </Box>
       </Box>
     </StyledContainer>

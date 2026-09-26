@@ -1,10 +1,11 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import { StyledContainer } from "@/styles/StyledContainer";
 import FrontPageHero from "@/components/hero/FrontPageHero";
 import CategoryGrid from "@/components/categoryGrid/CategoryGrid";
 import { getCategories, getProducts } from "@/lib/woocommerce";
 import ProductGrid from "@/components/productGrid/ProductGrid";
 import { Metadata } from "next";
+import { StyledLink } from "@/components/navbar/Navbar.styles";
 
 // 🎯 SEO
 const pageTitle = "Tilbehør til en mere bevidst hverdag";
@@ -61,7 +62,7 @@ export default async function HomePage() {
     undefined,
     1,
     false,
-    6,
+    4,
   );
 
   return (
@@ -85,9 +86,12 @@ export default async function HomePage() {
           <Typography variant="h3">Astrologi</Typography>
           <ProductGrid products={framedPostersProducts} />
           <Typography variant="h4">
-            <Link href="/shop/category/indrammede-plakater">
+            <Button
+              variant="contained"
+              href="/shop/category/indrammede-plakater"
+            >
               Se flere stjernetegn ➡
-            </Link>
+            </Button>
           </Typography>
         </Box>
       </StyledContainer>

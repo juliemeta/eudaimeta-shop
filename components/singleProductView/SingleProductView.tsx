@@ -24,10 +24,11 @@ import { ProductAccordion, StyledAccordion } from "./SingleProductView.styles";
 import { DynamicBreadcrumbs } from "../breadcrumbs/dynamicBreadcrumbs";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ProductGrid from "../productGrid/ProductGrid";
 
 import { useWishlistStore } from "@/lib/store/wishlistStore";
 
-export function SingleProductView({ product }: any) {
+export function SingleProductView({ product, relatedProducts = [] }: any) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const selectedImage =
@@ -624,6 +625,16 @@ export function SingleProductView({ product }: any) {
           </AccordionDetails>
         </ProductAccordion>
       </Box>
+
+      {relatedProducts.length > 0 && (
+        <Box sx={{ mt: 8 }}>
+          <Typography variant="h3" sx={{ mb: 3 }}>
+            Du vil måske også kunne lide
+          </Typography>
+
+          <ProductGrid products={relatedProducts} />
+        </Box>
+      )}
 
       <Dialog
         open={lightboxOpen}
